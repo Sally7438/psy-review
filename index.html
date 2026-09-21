@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>精神（心理）分析治療 · 互動式讀書電子書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap">
+<style>
+:root{
+  --bg:#E8ECF1;--paper:#FCFDFE;--ink:#1A2233;--muted:#566176;--line:#D2D9E3;
+  --pri:#2C3E7B;--pri-s:#E3E8F6;--teal:#15695A;--teal-s:#DAEFEA;
+  --plum:#8E2C58;--plum-s:#F7E3EB;--amber:#84590A;--amber-s:#F8EBCB;
+  --slate:#465268;--slate-s:#E5E9F0;--deep:#1E2C5E;--deep-ink:#F2F5FF;
+  --fs:17px;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU","Source Han Serif TC",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#10141C;--paper:#181E2A;--ink:#E5E9F2;--muted:#9AA6BB;--line:#2B3446;
+    --pri:#9DB0F5;--pri-s:#222B4A;--teal:#63D0C0;--teal-s:#15322E;
+    --plum:#F096BB;--plum-s:#3A1F2D;--amber:#E7BC5E;--amber-s:#382D12;
+    --slate:#AAB6CB;--slate-s:#252D3D;--deep:#0B1230;--deep-ink:#E8ECFF;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10141C;--paper:#181E2A;--ink:#E5E9F2;--muted:#9AA6BB;--line:#2B3446;
+  --pri:#9DB0F5;--pri-s:#222B4A;--teal:#63D0C0;--teal-s:#15322E;
+  --plum:#F096BB;--plum-s:#3A1F2D;--amber:#E7BC5E;--amber-s:#382D12;
+  --slate:#AAB6CB;--slate-s:#252D3D;--deep:#0B1230;--deep-ink:#E8ECFF;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:var(--fs);line-height:1.85;min-height:100%}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--pri);outline-offset:2px;border-radius:4px}
+a{color:var(--pri)}
+
+/* ---------- layout ---------- */
+.app{display:grid;grid-template-columns:304px minmax(0,1fr);min-height:100vh}
+.rail{position:sticky;top:env(safe-area-inset-top,0px);height:calc(100vh - env(safe-area-inset-top,0px));height:calc(100dvh - env(safe-area-inset-top,0px));overflow:auto;background:var(--paper);border-right:1px solid var(--line);padding:22px 16px 28px}
+.brand{font-family:var(--serif);font-weight:900;font-size:1.32rem;line-height:1.35;margin:0 6px 4px}
+.brand-sub{margin:0 6px 16px;font-size:.82rem;color:var(--muted);line-height:1.6}
+.overall{margin:0 6px 16px}
+.overall .lbl{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted)}
+.bar{height:7px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:5px}
+.bar>i{display:block;height:100%;background:var(--teal);width:0;transition:width .3s}
+.toc{list-style:none;margin:0;padding:0}
+.toc button{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:baseline;width:100%;text-align:left;background:none;border:0;border-radius:8px;padding:9px 10px;line-height:1.45;font-size:.95rem}
+.toc button:hover{background:var(--slate-s)}
+.toc button[aria-current="page"]{background:var(--pri-s);color:var(--pri);font-weight:700}
+.toc .no{font-family:var(--serif);font-weight:900;color:var(--muted);text-align:right}
+.toc .done{color:var(--teal);font-weight:700}
+.tagdot{font-size:.72rem;padding:0 6px;border-radius:9px;font-weight:700;white-space:nowrap}
+.tag-必考{background:var(--plum-s);color:var(--plum)}
+.tag-常考{background:var(--amber-s);color:var(--amber)}
+.tag-加分{background:var(--slate-s);color:var(--slate)}
+
+.main{min-width:0}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 20px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.tb{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:5px 12px;font-size:.88rem;line-height:1.5;min-height:36px}
+.tb:hover{border-color:var(--pri)}
+.tb[aria-pressed="true"]{background:var(--pri);color:var(--paper);border-color:var(--pri)}
+#menuBtn{display:none}
+.search{position:relative;flex:1 1 200px;max-width:360px}
+.search input{width:100%;border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:5px 12px;min-height:36px;font-size:.9rem}
+.results{position:absolute;left:0;right:0;top:calc(100% + 4px);background:var(--paper);border:1px solid var(--line);border-radius:10px;max-height:60vh;overflow:auto;z-index:30;box-shadow:0 8px 24px rgba(10,20,40,.18)}
+.results button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:9px 12px;font-size:.88rem;line-height:1.55}
+.results button:hover{background:var(--slate-s)}
+.results b{color:var(--pri)}
+.results .empty{padding:10px 12px;font-size:.88rem;color:var(--muted)}
+.spacer{flex:1}
+
+.page:focus{outline:none}
+.page{max-width:840px;margin:0 auto;padding:30px 24px 90px}
+.chead{display:flex;gap:18px;align-items:flex-start;margin-bottom:6px}
+.cnum{font-family:var(--serif);font-weight:900;font-size:4.2rem;line-height:1;color:var(--pri);opacity:.28;min-width:.9em}
+.chead h1{font-family:var(--serif);font-weight:900;font-size:1.95rem;line-height:1.35;margin:0 0 4px}
+.csub{margin:0;color:var(--muted);font-size:.95rem;line-height:1.7}
+.cmeta{display:flex;gap:10px;align-items:center;margin:14px 0 26px;font-size:.85rem;color:var(--muted);flex-wrap:wrap}
+.content h3{font-family:var(--serif);font-weight:900;font-size:1.3rem;line-height:1.45;margin:2.1em 0 .5em;padding-top:.2em}
+.content h4{font-size:1.05rem;margin:1.6em 0 .3em;color:var(--pri)}
+.content p{margin:.7em 0}
+.content ul,.content ol{padding-left:1.35em;margin:.6em 0}
+.content li{margin:.3em 0}
+.content strong{font-weight:700}
+
+/* callouts */
+.note{margin:1.3em 0;padding:12px 16px 12px 16px;border-left:5px solid var(--slate);background:var(--slate-s);border-radius:4px 10px 10px 4px}
+.note .nt{font-weight:700;font-size:.95rem;margin-bottom:2px}
+.note p,.note ul{margin:.3em 0}
+.note.key{border-color:var(--teal);background:var(--teal-s)}.note.key .nt{color:var(--teal)}
+.note.exam{border-color:var(--plum);background:var(--plum-s)}.note.exam .nt{color:var(--plum)}
+.note.trap{border-color:var(--amber);background:var(--amber-s)}.note.trap .nt{color:var(--amber)}
+.note.fix{border-color:var(--slate);background:var(--slate-s)}.note.fix .nt{color:var(--slate)}
+.note.case{border-color:var(--pri);background:var(--pri-s)}.note.case .nt{color:var(--pri)}
+.note.add{border-color:var(--pri);background:transparent;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.note.add .nt{color:var(--pri)}
+
+/* tables */
+.tw{overflow-x:auto;margin:1.1em 0;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.93rem;line-height:1.65}
+th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:var(--slate-s);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700}
+.cap{font-size:.85rem;color:var(--muted);margin:.2em 0 0}
+
+/* tabs */
+.tabs{margin:1.2em 0}
+.tabbar{display:flex;gap:6px;flex-wrap:wrap;border-bottom:2px solid var(--line)}
+.tabbar button{border:0;background:none;padding:8px 14px;border-radius:8px 8px 0 0;font-weight:500;margin-bottom:-2px;border-bottom:3px solid transparent}
+.tabbar button[aria-selected="true"]{color:var(--pri);border-bottom-color:var(--pri);font-weight:700;background:var(--pri-s)}
+.tabpanel{padding:6px 2px 0}
+
+/* cloze / recite */
+.cz{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--amber) 32%,transparent) 62%);border-radius:2px;cursor:pointer}
+body.recite .cz:not(.on){color:transparent;background:var(--line);text-shadow:none;user-select:none;border-radius:4px}
+.recite-hint{display:none;font-size:.88rem;background:var(--pri-s);color:var(--pri);padding:6px 12px;border-radius:8px;margin-bottom:14px}
+body.recite .recite-hint{display:block}
+
+/* depth map */
+.depth{border-radius:14px;overflow:hidden;border:1px solid var(--line);margin:1.4em 0}
+.zone{padding:16px 18px}
+.zone h4{margin:0 0 8px;font-size:.95rem;color:inherit}
+.zone p{margin:0 0 10px;font-size:.85rem;line-height:1.6;opacity:.88}
+.zone:nth-child(1){background:var(--pri-s);color:var(--ink)}
+.zone:nth-child(2){background:color-mix(in srgb,var(--pri) 36%,var(--paper));color:var(--ink)}
+.zone:nth-child(3){background:var(--deep);color:var(--deep-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.72);color:#14204A;border-radius:999px;padding:4px 14px;font-size:.9rem;line-height:1.6}
+.chip:hover{background:#fff}
+.zone:nth-child(3) .chip{background:rgba(255,255,255,.12);color:var(--deep-ink);border-color:rgba(255,255,255,.4)}
+.zone:nth-child(3) .chip:hover{background:rgba(255,255,255,.24)}
+
+/* widgets */
+.widget{margin:1.4em 0;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.widget h4{margin:0 0 6px;color:var(--ink);font-size:1.02rem}
+.wnote{font-size:.85rem;color:var(--muted);margin:.3em 0 .8em}
+.pill{display:inline-block;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:2px 13px;margin:2px 4px 2px 0;font-size:.88rem}
+.pill[aria-pressed="true"]{background:var(--pri);color:var(--paper);border-color:var(--pri)}
+.btn{border:1px solid var(--pri);background:var(--pri);color:var(--paper);border-radius:8px;padding:7px 18px;font-weight:500;min-height:40px}
+.btn.ghost{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+
+/* sliders */
+.sl{display:grid;grid-template-columns:5.2em 1fr 3.2em;gap:10px;align-items:center;margin:8px 0}
+.sl input[type=range]{width:100%;accent-color:var(--pri);height:28px}
+.sl output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.stack{display:flex;height:26px;border-radius:8px;overflow:hidden;margin:10px 0;border:1px solid var(--line)}
+.stack i{display:block;height:100%;transition:width .15s}
+.stack .a{background:var(--plum)}.stack .b{background:var(--teal)}.stack .c{background:var(--pri)}
+.verdict{background:var(--slate-s);border-radius:8px;padding:8px 12px;font-size:.93rem;line-height:1.7}
+
+/* flip cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.flip{position:relative;min-height:132px;border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:14px;text-align:left;line-height:1.6;display:block;width:100%}
+.flip:hover{border-color:var(--pri)}
+.flip .fr{font-family:var(--serif);font-weight:900;font-size:1.15rem}
+.flip .en{color:var(--muted);font-size:.85rem}
+.flip .bk{display:none;font-size:.88rem}
+.flip.on{background:var(--pri-s);border-color:var(--pri)}
+.flip.on .fr,.flip.on .en{display:none}
+.flip.on .bk{display:block}
+.flip .hint{position:absolute;right:12px;bottom:8px;font-size:.75rem;color:var(--muted)}
+.flip.on .hint{display:none}
+.bk b{color:var(--pri)}
+
+/* trend */
+.trow{padding:12px 0;border-bottom:1px solid var(--line)}
+.trow:last-child{border-bottom:0}
+.thead{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.thead b{font-size:1rem}
+.tscore{font-size:.82rem;color:var(--muted);white-space:nowrap}
+.tbar{height:10px;border-radius:6px;background:var(--line);margin:6px 0;overflow:hidden}
+.tbar i{display:block;height:100%;border-radius:6px;background:var(--pri)}
+.tbar i.s5{background:var(--plum)}.tbar i.s4{background:var(--amber)}
+.ttypes{font-size:.82rem;color:var(--muted)}
+.twhy{font-size:.9rem;margin:2px 0 6px}
+.linkbtn{background:none;border:0;color:var(--pri);padding:0;text-decoration:underline;font-size:.88rem}
+
+/* quiz */
+.quiz{margin:2em 0 1em;padding:18px;border:2px solid var(--pri);border-radius:14px;background:var(--paper)}
+.quiz>h3{margin:0 0 8px!important;padding:0!important;font-size:1.15rem!important}
+.qhead{font-size:.85rem;color:var(--muted)}
+.qtext{font-weight:700;margin:.4em 0 .7em}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:9px 14px;line-height:1.6}
+.opt:hover:not(:disabled){border-color:var(--pri);background:var(--pri-s)}
+.opt.ok{border-color:var(--teal);background:var(--teal-s);color:var(--ink)}
+.opt.no{border-color:var(--plum);background:var(--plum-s);color:var(--ink)}
+.opt:disabled{cursor:default}
+.fb{margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--slate-s);font-size:.93rem;line-height:1.7}
+.fb strong.g{color:var(--teal)}.fb strong.r{color:var(--plum)}
+.score{font-family:var(--serif);font-weight:900;font-size:2rem;color:var(--pri)}
+.wrong{border-left:4px solid var(--plum);padding:6px 12px;margin:10px 0;background:var(--plum-s);border-radius:4px 8px 8px 4px;font-size:.92rem}
+
+/* flash */
+.fc{min-height:210px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:22px;width:100%;line-height:1.75;font-size:1.05rem}
+.fc.on{background:var(--pri-s);border-color:var(--pri)}
+.fc small{display:block;color:var(--muted);margin-top:10px;font-size:.8rem}
+select{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:5px 10px;min-height:36px}
+
+/* misc */
+details{border:1px solid var(--line);border-radius:10px;margin:10px 0;background:var(--paper)}
+summary{padding:10px 14px;font-weight:700;cursor:pointer;line-height:1.6}
+details>div{padding:0 16px 12px}
+textarea{width:100%;min-height:96px;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:10px 12px;line-height:1.7;resize:vertical}
+.chk label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;cursor:pointer}
+.chk input{margin-top:.5em;width:18px;height:18px;accent-color:var(--teal)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:34px;flex-wrap:wrap}
+.notebox{margin-top:26px}
+.notebox h3{font-size:1.05rem!important;margin:0 0 6px!important}
+.foot{margin-top:40px;font-size:.82rem;color:var(--muted);line-height:1.7}
+.det-on{background:var(--pri-s)!important;border-color:var(--pri)!important}
+.scrim{display:none}
+
+@media (max-width:920px){
+  .app{grid-template-columns:1fr}
+  .rail{position:fixed;left:0;top:0;bottom:0;height:auto;width:min(86vw,330px);z-index:60;transform:translateX(-102%);transition:transform .22s;padding-top:calc(env(safe-area-inset-top,0px) + 18px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 24px)}
+  .rail.open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.35)}
+  .scrim.show{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:55}
+  #menuBtn{display:inline-block}
+  .topbar{padding:8px 12px;gap:6px}
+  .tb{padding:3px 9px;min-height:34px;font-size:.82rem}
+  .search{flex:1 1 130px}
+  .page{padding:22px 16px 80px}
+  .cnum{font-size:3rem}
+  .chead h1{font-size:1.6rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media print{.rail,.topbar,.pn,.quiz,.scrim{display:none}.app{display:block}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="rail" id="rail" aria-label="章節目錄">
+    <h2 class="brand">精神（心理）分析治療</h2>
+    <p class="brand-sub">依黃傳永教授兩份講義整理 · 統整、重點提醒、考試趨勢</p>
+    <div class="overall"><div class="lbl"><span>閱讀進度</span><span id="ovTxt">0 / 0</span></div><div class="bar"><i id="ovBar"></i></div></div>
+    <ul class="toc" id="toc"></ul>
+  </nav>
+  <div class="scrim" id="scrim"></div>
+  <div class="main">
+    <header class="topbar">
+      <button class="tb" id="menuBtn" aria-label="開啟章節目錄">目錄</button>
+      <div class="search"><input id="q" type="search" placeholder="搜尋關鍵字，例如：投射認同" aria-label="搜尋電子書"><div class="results" id="results" hidden></div></div>
+      <span class="spacer"></span>
+      <button class="tb" id="recite" aria-pressed="false" title="把重點詞遮起來，點一下才顯示，用來自我測驗">背誦模式</button>
+      <button class="tb" id="fsDown" aria-label="縮小字體">A−</button>
+      <button class="tb" id="fsUp" aria-label="放大字體">A+</button>
+      <button class="tb" id="theme" aria-label="切換深色或淺色">深色</button>
+    </header>
+    <main class="page" id="page" tabindex="-1"></main>
+  </div>
+</div>
+<script>
+/* ================= DATA ================= */
+const NL={key:"重點提醒",exam:"考試趨勢",trap:"易混淆",fix:"講義小提醒",case:"案例",add:"補充（非講義原文）"};
+
+const DEF=[
+ {n:"壓抑",e:"repression",d:"把具有威脅或痛苦的想法和感受，統統排除於知覺（意識）之外。",x:"最重要的心理歷程之一，是許多其他防衛與精神官能症的根源；是「不由自主」地排除。出生前五、六年的痛苦事件多不復記憶，卻仍深深影響往後行為。"},
+ {n:"否認",e:"denial",d:"面對現實的危險時，視若無睹或充耳不聞。",x:"藉由扭曲創傷情境中的想法、感受與知覺來運作。與壓抑十分類似，但通常在前意識與意識層面運作。"},
+ {n:"反向作用",e:"reaction formation",d:"以與威脅性衝動相反的態度與行為，來抵抗該衝動。",x:"例：以過分的慈愛隱藏怨恨、以極端的優雅掩蓋反感、以過度的仁慈為殘忍偽裝。"},
+ {n:"投射",e:"projection",d:"把個人無法接受的慾望或衝動，歸到別人身上。",x:"一種自欺性質的機轉，例：將好色的、攻擊成性的衝動，說成是別人具有，而非自己。"},
+ {n:"置換（替代）",e:"displacement",d:"把能量從不可觸犯的對象，導引到其他較安全的對象身上。",x:"例：被上司威嚇的懦弱職員，回家後把當時不敢對上司發作的敵意，一股腦發洩到小孩身上。"},
+ {n:"合理化",e:"rationalization",d:"為自己編造「很好的理由」，用來解釋並消除自我所受的傷害。",x:"例：得不到全力追求的職位，就讓自己相信「我根本一點都不想要那個位置」，緩和失望的痛苦。"},
+ {n:"昇華",e:"sublimation",d:"把性或攻擊的能量，重新導向創作行為或社會可接受甚至讚賞的管道。",x:"例：攻擊衝動以體育活動表現，人們得以用健康方式表達攻擊感受，甚至獲獎賞。"},
+ {n:"退化（退行）",e:"regression",d:"返回早已發展過的不成熟階段，因為該階段外界對他的要求較少。",x:"例：孩童在學校受驚嚇，出現哭泣、過度依賴、吸吮拇指、躲起來、黏著老師不放，是在努力回到早期感覺安全的時刻。"},
+ {n:"內射",e:"introjection",d:"個人接受並「吞入」他人的價值觀與行為標準。",x:"正向：把父母價值觀整合為自己的一部分（前提是非盲目接受）。負面：集中營的囚犯為克制強烈焦慮，向侵略者認同而接受敵方價值觀。"},
+ {n:"認同",e:"identification",d:"藉由認同成功的原因、組織或人物，提高自我價值感並避免失敗感。",x:"也是兒童習得性別角色的一部分；但在人們自覺自卑渺小時，也會是一種防衛反應。"},
+ {n:"補償",e:"compensation",d:"對個人所知覺到的弱點善加偽裝，或發展某些正向特質，以彌補自身缺陷。",x:"具有導正適應的價值：「不要只看到我的弱點，也要看到我的成就。」"}
+];
+
+const DRILL=[
+ ["被上司威嚇的職員，回家後對孩子大發脾氣。","置換（替代）"],
+ ["沒得到追求已久的職位，他說：「其實我根本一點都不想要那個位置。」","合理化"],
+ ["小學生在學校被嚇到，開始哭泣、吸吮拇指、黏著老師不放。","退化（退行）"],
+ ["一個人把攻擊衝動投入拳擊訓練，並拿到獎牌。","昇華"],
+ ["內心怨恨母親的人，對母親表現出過分的慈愛與體貼。","反向作用"],
+ ["他不肯承認自己有攻擊慾，卻總覺得「同事都想找我麻煩」。","投射"],
+ ["醫師說出嚴重的病情，個案卻表示「我聽不到你在說什麼」，視若無睹。","否認"],
+ ["集中營囚犯為克制強烈焦慮，逐漸接受看守者的價值觀。","內射"],
+ ["自覺渺小的人，不斷強調自己與成功的名人、組織的關係，以取得價值感。","認同"],
+ ["身體有缺陷的人，把力氣投入課業並說：「不要只看我的弱點，也要看到我的成就。」","補償"],
+ ["童年幾年的痛苦事件大多想不起來，卻深深影響成年後的行為。","壓抑"]
+];
+
+const ERIK=[
+ {a:"嬰兒期（約 0–1 歲）",f:"口腔期",c:"信任 vs. 不信任",n:"對應 Freud 口腔期的議題：能否信任自己與他人、敢不敢建立親密。"},
+ {a:"幼兒期（約 1–3 歲）",f:"肛門期",c:"自主 vs. 羞愧、懷疑",n:"對應肛門期：自主感與自有的力量；被否定時容易羞愧、懷疑自己。"},
+ {a:"學齡前兒童期（約 3–6 歲）",f:"性蕾期（性器期，即伊底帕斯期）",c:"創造進取 vs. 罪惡感",n:"與伊底帕斯期同一階段：進取、競爭、規範與罪惡感的處理。"},
+ {a:"學齡兒童期（約 6–12 歲）",f:"潛伏期",c:"勤勉 vs. 自卑",n:"性驅力被壓抑，能量轉向學習、同儕與師長等社會面向。"},
+ {a:"青少年時期（約 12–18 歲）",f:"兩性期（生殖期）",c:"自我認同 vs. 角色混淆",n:"潛伏期壓抑的衝動再度出現，引發青春期心理變化；核心任務是找到「我是誰」。"},
+ {a:"成年初期",f:"Freud 沒有另立階段（講義以「性器期（持續）」表示）",c:"親密 vs. 孤立",n:"Erikson 把發展延伸到成年：這是與 Freud 最大的差異。"},
+ {a:"中年期（成年中期）",f:"同上",c:"生產 vs. 停滯",n:"關心下一代、工作與創造的貢獻，或陷入停滯。"},
+ {a:"老年期（成年晚期）",f:"同上",c:"統整 vs. 破滅",n:"回顧一生，能否接納並整合，或感到破滅。"}
+];
+
+const XIAO=[
+ ["「其實我完全沒感覺，這很正常，人本來就會老死嘛！」","否認 ＋ 隔離（情感隔離）","聲稱「完全沒感覺」，把強烈的悲傷與內疚抽離，只談客觀事實。"],
+ ["「而且他走了對大家都好，醫藥費省了，我媽也解脫了。」","合理化","搬出「對大家都好」的邏輯，來粉飾情緒。"],
+ ["（臉上帶著笑容說出以上這些話）","幽默／反向形成","用輕鬆的笑，掩飾內在的巨大崩潰與恐懼。"],
+ ["「倒是諮商師你，今天臉色好沈重、好像要哭了一樣。」","投射","把自己不敢碰觸的悲傷與沉重，推到諮商師身上。"]
+];
+
+const CHECK=["個案如何來到治療：自行前來，還是被轉介","來診原因","希望達成的目標","主訴與病史","症狀（以及症狀可能的意義）","過去是否看過醫師或其他專業人員","初診時的焦慮、羞愧或污名擔憂","關鍵互動片段（夢、言語、行為、當下的互動）","治療師自己的感受與反應（反移情）","暫時性的假設（隨新資料修正）","自我功能與現實檢驗的評估","習慣使用的防衛機制與其提示的層次"];
+
+const TOPICS=[
+ {t:"自我防衛機轉（定義、辨識、分類）",s:5,ty:["名詞解釋","情境辨識","申論"],ch:3,w:"第 1 份講義用 5 張表逐一介紹，第 2 份又用整整一大段延伸（阻抗、Brenner、案例）。這是兩份講義篇幅最大的主題，也最適合出成「給案例、辨識防衛」的題目。"},
+ {t:"移情與反移情（含各學派差異）",s:5,ty:["比較題","申論","情境辨識"],ch:7,w:"第 2 份講義的開場主題，且有『你們會更同意誰的觀點呢？』這類開放式提問，還附兩個完整的諮商情境。很適合考學派比較與臨床運用。"},
+ {t:"治療目標、技術與治療者角色",s:4,ty:["名詞解釋","申論"],ch:6,w:"講義列出「兩大目標」「六大基本技術」「古典 vs. 動力取向差異」，這種條列式內容是名詞解釋與簡答題的常客。"},
+ {t:"衝突模式 vs. 缺陷模式",s:4,ty:["比較題","申論","情境辨識"],ch:9,w:"講義用整頁對照兩種病理觀與介入焦點，最容易命題成「比較兩者」或「給個案，判斷偏哪一種」。"},
+ {t:"治療架構（內在／外在）",s:4,ty:["名詞解釋","申論","情境辨識"],ch:10,w:"有定義、兩張要素表、四點重要性、破壞後果、現代趨勢，甚至連『如何向個案解釋收費』都寫了逐字稿，偏實務應用。"},
+ {t:"人格結構與焦慮三類",s:4,ty:["名詞解釋","簡答"],ch:1,w:"古典理論的基礎概念，講義用圖形讓學生判斷人格結構是否健康；焦慮三類最容易被出成選擇題或配對。"},
+ {t:"個案概念化（自我功能、現實檢驗、防衛層級）",s:3,ty:["申論","情境辨識"],ch:11,w:"講義的『初期評估重點』與『防衛層級』可直接轉成個案分析題，適合當作綜合題。"},
+ {t:"躁狂性防衛、虛假自體、垂直分裂、好似人格",s:3,ty:["名詞解釋"],ch:8,w:"皆為講義點名的進階專有名詞，體積小、辨識度高，適合名詞解釋。"},
+ {t:"內射、認同、內化的區辨",s:3,ty:["比較題","名詞解釋"],ch:3,w:"講義刻意另立一頁區分三者，屬於『老師特別想讓你分清楚』的內容。"},
+ {t:"修通與洞察",s:3,ty:["名詞解釋","簡答"],ch:6,w:"講義單獨立頁說明，重點是『洞察 ≠ 問題解決』。"},
+ {t:"心理性發展與伊底帕斯期",s:3,ty:["名詞解釋","簡答"],ch:4,w:"講義花了一整組簡報講伊底帕斯期，並反覆強調它是『概念、不是診斷標籤』，答題時要用這個角度。"},
+ {t:"Erikson 八階段與 Freud 對照",s:3,ty:["配對","比較題"],ch:5,w:"講義有對照表，屬於固定格式、容易出成配對題。"},
+ {t:"潛意識來源與日常影響",s:2,ty:["簡答"],ch:2,w:"六項來源可用口訣記，日常案例偏理解性質，出題機率相對低，但屬基礎概念。"}
+];
+
+/* ================= CHAPTERS ================= */
+const CH=[
+/* ---------- 0 導讀 ---------- */
+{id:"intro",n:"",t:"導讀：學習地圖與考試趨勢",sub:"先看全貌，再決定時間怎麼分配",tag:"",min:6,b:[
+ ["p","這本電子書把黃傳永教授的兩份《精神（心理）分析治療 2026》講義整合成一條完整的學習線：第 1 份偏重**古典理論**（人格結構、防衛機轉、發展階段、Erikson、治療歷程），第 2 份偏重**當代精神動力取向的臨床思考**（移情／反移情、防衛與阻抗、衝突 vs. 缺陷模式、治療架構、個案概念化）。"],
+ ["h","一張由淺入深的地圖"],
+ ["p","把整套理論想成一座冰山：水面上是看得見的治療做法，水面下是焦慮與防衛，最深處是早期經驗與關係模式。點任一章可直接跳過去。這只是幫助記憶的分區，不是講義的分類。"],
+ ["widget","depth"],
+ ["h","這本書怎麼用"],
+ ["ul",["每章依序有：**統整**（整理過的重點）、**重點提醒**（綠色）、**考試趨勢**（紫紅色）、**易混淆**（琥珀色）、**講義小提醒**（灰色，指出講義用語不一致或疑似筆誤的地方）。","文字中有底線標示的詞是關鍵字。打開上方「背誦模式」，這些詞會被遮住，點一下才會顯示，用來自我測驗。","每章最後有小測驗；第 12 章有全書閃卡、模擬考與申論題架構。","右上角可調整字體大小、切換深色模式；閱讀進度與筆記只存在你自己的瀏覽器。"]],
+ ["h","考試趨勢總覽"],
+ ["note","fix","先說明這份趨勢怎麼來的","我沒有這門課的歷屆試題，所以下面的分數**不是考古題統計**，而是依據講義本身的線索推估：該主題佔多少篇幅、有沒有被單獨立頁、有沒有案例與提問、有沒有整理成表格。請把它當成「複習時間分配的參考」，並以老師實際公告的範圍與題型為準。"],
+ ["widget","trend"],
+ ["note","exam","常見題型與對應準備","**名詞解釋**：背定義＋一個例子（閃卡）。**比較題**：用表格記差異（衝突 vs. 缺陷、Freud vs. Klein vs. Winnicott、內射 vs. 認同）。**情境辨識**：練習看案例指出防衛機轉或移情／反移情（第 3、8 章的互動練習）。**申論**：先寫定義，再寫機制，最後補一個臨床例子；第 12 章有 7 題架構。"]
+]},
+
+/* ---------- 1 ---------- */
+{id:"ch1",n:1,t:"人性觀與人格結構",sub:"本我、自我、超我，以及「總能量固定」",tag:"常考",min:9,b:[
+ ["p","佛洛伊德（{{Sigmund Freud}}，1856–1939）是精神分析的創始人。這一章先打地基：他怎麼看待「人」，以及心靈怎麼分工。"],
+ ["h","人物背景"],
+ ["ul",["出生於摩拉維亞的弗萊堡（今捷克 Příbor），約 4 歲隨家遷居維也納，之後在維也納生活、工作近 80 年。","父親雅各布比母親阿瑪莉亞大 20 歲；佛洛伊德是母親的第一個孩子，深受寵溺，被視為「金童」。","同母手足共三男五女（含他本人），父親前段婚姻另有兩位同父異母的成年兄長。","講義的解讀：這種複雜的代際年齡差與權威父權背景，是日後「伊底帕斯情結」的重要觀察養分。"]],
+ ["h","人性觀：決定論"],
+ ["ul",["行為由{{非理性力量}}、{{潛意識動機}}，以及生命前六年關鍵期演變出的{{生物與本能驅力}}所決定。","基本立場是{{決定論}}。","{{本能}}（instincts）是核心概念，分成{{生的本能}}（life instincts）與{{死的本能}}（death instincts）。"]],
+ ["note","trap","「決定論」不等於「沒有選擇」","精神分析的目的正是讓潛意識動機浮現到意識層面，人才「有練習做選擇的機會」（第 2 章）。答題時先講決定論，再補這一句，觀點會比較完整。"],
+ ["h","人格結構"],
+ ["table",["","本我 id","自我 ego","超我 superego"],[
+  ["支配原則","{{享樂原則}}（pleasure principle）","{{現實原則}}（reality principle）","道德戒律與是非善惡的判斷標準"],
+  ["角色","人格的原初系統","人格的執行者，統籌、控制與調整","人格的仲裁者"],
+  ["功能","解除緊張，避苦求樂","已接觸外在現實；具現實感與邏輯思考，能形成可用來滿足需求的行動計畫","包含個人的道德戒律"]
+ ]],
+ ["h","能量系統：總量固定"],
+ ["p","人是一種{{能量系統}}。心理能量的總量固定，所以某一個系統掌控的能量愈多，其餘兩個系統可用的能量就愈少；行為就是這種能量分配變化的結果。拖動下方滑桿，感受「此消彼長」。"],
+ ["widget","energy"],
+ ["note","add","怎樣算是健康的人格？","講義以四張本我／自我／超我的圖讓學生判斷「這樣的人格結構健康嗎？為什麼？」。可用的答題原則：自我夠強，能協調本我衝動、超我要求與現實，就是健康的方向；本我壓過自我容易衝動化，超我壓過自我容易出現過度罪惡感與道德焦慮。"],
+ ["note","exam","可能怎麼考","三個系統各自遵循什麼原則？「總能量固定」的含意？為什麼超我過強的人容易焦慮（連到第 2 章的道德焦慮）？"]
+],q:[
+ {q:"「以解除緊張、避苦求樂為目的」的是人格中的哪一個系統？",o:["本我","自我","超我","前意識"],a:0,e:"本我是人格的原初系統，由享樂原則支配。"},
+ {q:"依現實原則運作，扮演統籌、控制與調整角色的是？",o:["本我","自我","超我","潛意識"],a:1,e:"自我已接觸外在現實，是人格的執行者，由現實原則支配。"},
+ {q:"若心理能量總量固定，下列推論何者最正確？",o:["超我掌控的能量增加時，本我與自我可用的能量會減少","三個系統的能量互不影響","自我變強不會影響本我","能量會隨年齡無限增加"],a:0,e:"總能量固定，一個系統掌控愈多，其餘兩個可用的就愈少。"},
+ {q:"講義對佛洛伊德學派人性觀的基本概括是？",o:["決定論","完全自由意志","自我實現的潛能論","存在焦慮論"],a:0,e:"行為由非理性力量、潛意識動機與早期本能驅力所決定，故稱決定論。"},
+ {q:"佛洛伊德學派的本能核心概念包含哪兩類？",o:["生的本能與死的本能","成長本能與安全本能","攻擊本能與依附本能","饑餓本能與睡眠本能"],a:0,e:"生的本能（life instincts）與死的本能（death instincts）。"}
+]},
+
+/* ---------- 2 ---------- */
+{id:"ch2",n:2,t:"意識、潛意識與焦慮",sub:"潛意識的六個來源、焦慮三類、為何需要防衛",tag:"常考",min:10,b:[
+ ["h","潛意識是什麼"],
+ ["p","{{潛意識}}（unconscious）儲存了個人全部的經驗、記憶與被壓抑的題材。講義列出潛意識的六個來源："],
+ ["ol",["{{夢}}","{{說溜嘴與遺忘}}","{{催眠後的暗示作用}}","經由{{自由聯想}}技術獲得的題材","經由{{投射技術}}獲得的題材（例：羅夏克墨漬測驗）","{{精神症狀的象徵內容}}"]],
+ ["note","add","自編口訣","夢、溜、催、聯、投、症：「夢溜催聯投症」。"],
+ ["h","症狀的象徵意義（講義例）"],
+ ["ul",["**幻覺或妄想**：總是聽到「有人在追蹤自己」，可能不只是大腦的錯誤運作，也可能表達潛意識中「被威脅」「無法逃脫」的情緒，反映內心的恐懼或焦慮。","**焦慮症狀**：「心跳加速」「胸口緊壓」不只是生理現象，也象徵對未來不確定性與失控的恐懼。"]],
+ ["h","精神分析的目的與「治癒」"],
+ ["ul",["目的：使潛意識動機浮現到意識層面，當事人才有{{練習做選擇}}的機會。","潛意識歷程是形成所有精神官能症症狀及行為的根源。","所謂「治癒」，是以揭露症狀的意義、行為的肇因，以及妨礙健康功能的被壓抑題材為基礎的工作。"]],
+ ["h","潛意識如何影響日常（講義例）"],
+ ["note","case","例一：早年被忽視","從小被父母忽視或冷漠，痛苦被壓抑到潛意識。長大後在關係中出現過度依賴或過度防衛，自己卻不明白為何這樣反應；根源是對「被忽視」的深層恐懼，未經處理的情感會在無意識中以行為、情緒甚至精神官能症症狀表現出來。"],
+ ["note","case","例二：早期親密關係的喪失","父母離婚或親人過世，造成被拋棄或無助感，卻未被處理，形成不安全感與深沉的悲傷。日後面對新壓力時，這些未處理的情感可能以憂鬱症狀浮現：無望、無助、失去興趣、極度疲憊。講義強調：憂鬱的根源並非單純的情境壓力，而是長期累積、未被覺察的情感困擾。"],
+ ["h","焦慮"],
+ ["p","{{焦慮}}（anxiety）是促使我們做出某些事的緊張狀態，由本我、自我、超我爭奪可用心理能量控制權的衝突中發展出來，功能是對迫近的危機提出{{警示}}。"],
+ ["table",["類型","害怕什麼","講義例子"],[
+  ["現實焦慮 reality anxiety","來自外界的危險；程度與真實威脅相當","明天要考試而焦慮，立刻坐下來複習、擬定讀書計畫"],
+  ["神經質焦慮 neurotic anxiety","害怕本能失去控制，做出會遭懲處的不當行為","開會說錯一句話，立刻覺得整個職業生涯受威脅、同事都看不起他（過度的神經質焦慮）"],
+  ["道德焦慮 moral anxiety","害怕受到自己良心的譴責","（來自超我）"]
+ ]],
+ ["p","當自我不再能用理性、直接了當的方法控制焦慮，就得依賴不切實際的方法，也就是{{自我防衛行為}}，下一章的主題。"],
+ ["note","key","三類焦慮，抓一個關鍵字","現實＝外界；神經質＝本能失控（本我）；道德＝良心（超我）。講義的三個「因應」例子：現實焦慮→複習；人際衝突→客觀溝通；內在驅力衝突→鍛鍊能力、循合理途徑爭取。這些是**不需要防衛的理性處理**，可與下一章對照。"],
+ ["note","exam","可能怎麼考","說明三種焦慮並各舉一例；焦慮與自我防衛的關係；「幻聽／心悸」用精神分析怎麼理解（象徵內容）。"]
+],q:[
+ {q:"下列哪一項不屬於講義列出的潛意識來源？",o:["夢","說溜嘴與遺忘","有意識的邏輯推理","經由自由聯想技術獲得的題材"],a:2,e:"潛意識來源是夢、說溜嘴與遺忘、催眠後暗示、自由聯想、投射技術、症狀的象徵內容。"},
+ {q:"因為害怕本能失控、做出會被懲罰的行為而產生的焦慮，稱為？",o:["現實焦慮","神經質焦慮","道德焦慮","分離焦慮"],a:1,e:"神經質焦慮：害怕本能失去控制。"},
+ {q:"「明天要考試，立刻坐下來擬定讀書計畫」較屬於哪一類焦慮與因應？",o:["現實焦慮，以理性直接處理","道德焦慮","神經質焦慮","不需要處理的焦慮"],a:0,e:"現實焦慮的程度與真實威脅相當，自我可用理性、直接的方法處理。"},
+ {q:"「害怕受到自己良心的譴責」是哪一種焦慮？",o:["現實焦慮","神經質焦慮","道德焦慮","社交焦慮"],a:2,e:"道德焦慮與超我（良心）有關。"},
+ {q:"依講義，精神分析的目的是？",o:["消除所有焦慮","使潛意識動機浮現到意識層面，讓當事人有練習做選擇的機會","讓個案順從治療師","強化本我"],a:1,e:"揭露潛意識動機，才有選擇的可能。"},
+ {q:"個案總是聽到「有人在追蹤自己」，精神分析取向可能如何理解？",o:["只是大腦的錯誤運作，沒有其他意義","可能象徵潛意識中「被威脅」「無法逃脫」的情緒","一定是催眠造成的","與早期經驗無關"],a:1,e:"講義用症狀的象徵內容來理解：幻聽反映內心的恐懼或焦慮。"}
+]},
+
+/* ---------- 3 ---------- */
+{id:"ch3",n:3,t:"自我防衛機轉",sub:"11 種防衛、內射／認同／內化的區辨、情境辨識練習",tag:"必考",min:16,b:[
+ ["p","當自我無法用理性方式處理焦慮，就啟動{{自我防衛機轉}}，幫助個人因應焦慮、避免自我被焦慮淹沒。"],
+ ["ul",["防衛機轉有兩個普遍特性：(1) 都有{{否認與扭曲現實}}的特性；(2) 都在{{潛意識層面}}運作。","當自我防衛未達病態程度時，都算是正常的行為。"]],
+ ["h","11 種常見防衛（點卡片翻面）"],
+ ["widget","defcards"],
+ ["note","trap","最容易混的幾組","**否認 vs. 壓抑**：都是把痛苦排除在外，但否認通常在前意識與意識層面運作，壓抑是不由自主地排除於意識之外。**投射 vs. 置換**：投射是把「衝動」歸給別人（說是他有）；置換是把「情緒發洩的對象」換掉（我有，但對別人發洩）。**反向 vs. 昇華**：反向是表現出相反的態度；昇華是把能量導向社會讚賞的管道。**合理化 vs. 補償**：合理化是編理由消除傷害；補償是發展其他優點彌補缺陷。"],
+ ["h","內射、認同與內化"],
+ ["p","這三個詞講義特別整理成一頁。記憶方式：內射是「吞下去」，認同是「學來變成自己」，內化是把前兩者都包進去的「總稱」。"],
+ ["table",["","內射 introjection","認同 identification","內化 internalization"],[
+  ["性質","早期、較原始的防衛與心理吸收過程","較成熟、發展較完善的心理歷程","總括性、最高階的廣泛概念"],
+  ["怎麼吸收","把外在人物的態度、價值觀、行為模式或整個客體全盤接收、吞沒，缺乏批判性的選擇與消化","有意識或無意識地模仿、吸收某人的特質、價值觀或成就，整合到自我結構中，有更多自主選擇與同化","把外在的社會規範、文化價值、人際互動模式或客體關係，轉化為內在心理結構的整體過程"],
+  ["結果","形成僵化、外來的內在聲音（如嚴苛超我、罪惡感來源）；若客體具威脅性，個體會感到被內在的「外在權威」壓迫","更有彈性，真正屬於個體人格的一部分，促進成長與社會化","長期、漸進、經思考與情感消化的整合；完成度高的內化能增進人格彈性與獨立性"],
+  ["例子","（負面）集中營囚犯向侵略者認同","（正向）將治療者的特質與價值吸納為己用","兒童經多年成長，把社會道德慢慢變成自己的道德觀"]
+ ]],
+ ["note","fix","講義小提醒","內射與認同在第一份講義的防衛表中，也各自有「正向」與「防衛」兩種用法（例如內射的正向型態、認同在自卑時的防衛反應），答題時可以說明「是否經過思辨與消化」是區分的關鍵。"],
+ ["h","情境辨識練習"],
+ ["p","以下情境都取自講義。看完情境，選出你認為的防衛機轉。"],
+ ["widget","drill"],
+ ["h","防衛的成熟度（第 2 份講義的補充）"],
+ ["ul",["**原始／低階防衛**：解離、否認、原始分裂、投射性認同。提示邊緣型或精神病性結構，議題偏生存與瓦解的恐懼、自我與他人界線不清。","**神經症層次（講義稱成熟／高階）**：壓抑、理智化、置換、反向形成。提示神經症結構，議題偏伊底帕斯期衝突、內疚感、願望與道德禁止之間的碰撞。"]],
+ ["note","fix","講義小提醒","講義把「成熟／高階」與「神經症」放在同一項。多數文獻會分成原始、神經症層次與成熟三級，「成熟」通常指昇華、幽默、利他等。答題時建議寫「神經症層次（較高階）防衛」，並說明重點是**自我界線與現實檢驗是否完整**。"],
+ ["note","add","自我分析討論（講義課堂活動）","講義最後問：「在日常生活中，你認為你最常使用哪一種？或你看到別人最常使用的？有效或無效？」可在本章下方的筆記欄寫下自己的答案，這也是很好的實例素材。"],
+ ["note","exam","可能怎麼考","定義防衛機轉並說明兩個普遍特性；給一段情境，辨識防衛（常一段話含多種）；比較否認與壓抑、內射與認同；防衛的正面與負面功能（連到第 8 章）。"]
+],q:[
+ {q:"防衛機轉有哪兩個普遍特性？",o:["否認與扭曲現實；在潛意識層面運作","增進現實檢驗；在意識層面運作","只有病態時才出現；由治療師引發","減少能量；由超我控制"],a:0,e:"講義：都有否認與扭曲現實的特性，且都在潛意識層面運作。"},
+ {q:"否認與壓抑的差異，講義的說法是？",o:["否認通常在前意識與意識層面運作","否認是在潛意識深層運作","壓抑通常在意識層面刻意進行","兩者完全沒有關聯"],a:0,e:"否認與壓抑十分類似，但否認通常在前意識與意識層面運作。"},
+ {q:"把自己無法接受的慾望或衝動，說成是別人具有的，是哪一種防衛？",o:["置換","投射","合理化","補償"],a:1,e:"投射：將個人無法接受的慾望或衝動歸到別人身上。"},
+ {q:"下列對「內化」的描述何者最恰當？",o:["最高階、總括性的概念，內射與認同可視為其不同階段或形式","與內射完全相同","只發生在治療室內","是一種病態的防衛"],a:0,e:"內化是總括性的概念，所有吸收外在事物的歷程（含內射、認同）都可視為它的不同階段或形式。"},
+ {q:"下列哪一項最能說明「內射」相較於「認同」的特點？",o:["全盤接收、缺乏批判性的選擇與消化","有意識地整合並具有彈性","促進人格成長","一定是正向的"],a:0,e:"內射像直接吞下一個外在異物；認同則有更多自主選擇與同化。"},
+ {q:"「不要只看到我的弱點，也要看到我的成就。」最符合哪一種防衛？",o:["補償","反向作用","否認","退化"],a:0,e:"補償：對弱點善加偽裝，或發展正向特質彌補缺陷。"}
+]},
+
+/* ---------- 4 ---------- */
+{id:"ch4",n:4,t:"心理性發展與伊底帕斯期",sub:"五個階段、固著的意義，以及「愛不是佔有」",tag:"常考",min:12,b:[
+ ["h","早期發展的重要性"],
+ ["p","對佛洛伊德而言，人格的基礎全界定在生命的{{前六年（前三期）}}。前三個階段若無法順利完成，常成為個人日後接受心理諮商時要處理的困擾。"],
+ ["widget","stages"],
+ ["note","fix","年齡數字不一致，答題怎麼寫","講義前段說性蕾期「約三到五歲」、潛伏期「約五歲到青春期」；後段的伊底帕斯簡報則寫性器期 3–6 歲、潛伏期 6 歲到青春期。建議答題寫「約 3–6 歲」，必要時加註「不同教科書略有出入」。另外，「性蕾期」與「性器期」在講義中指同一階段（phallic stage，即伊底帕斯期所在），「兩性期」則是青春期之後的生殖期（genital stage）。"],
+ ["h","伊底帕斯期（Oedipal phase）"],
+ ["p","精神分析描述 3–6 歲兒童在親密、競爭、認同與規範形成上的重要發展任務。講義特別強調：{{核心不是「亂倫」本身，而是兒童如何理解愛、界線與角色}}。"],
+ ["h4","四個核心心理任務"],
+ ["p","從「我要全部擁有」走向「我能接受限制」：**愛與依附**、**競爭與嫉妒**、**界線與規範**、**認同與角色**。發展目標是學會：{{愛不是佔有，關係中有界線與規則}}。"],
+ ["h4","三角關係"],
+ ["p","兒童從二人關係進入三人關係：關係不再只是「我和媽媽／爸爸」，而是「我、我愛的人、以及另一個重要的人」。兒童會清楚感受到自己對主要照顧者的親密需求，同時感到「另一位照顧者」像競爭者。"],
+ ["tabs",[
+  {t:"經典描述",c:[["table",["","男孩","女孩"],[["依戀","對母親強烈依戀與佔有感","對父親產生親密依戀"],["競爭","把父親視為競爭者","與母親產生競爭或比較感"],["解決","因害怕懲罰而焦慮，轉向認同父親","最後轉向認同母親，形成性別角色與規範感"]]],["p","這是 Freud 的經典模型，並非現代定論。現代觀點更常把它理解成：兒童在家庭三角關係中學習親密、限制、角色與認同。"]]},
+  {t:"衝突到調整",c:[["p","**衝突**：想獨佔愛，但又怕失去愛 → **焦慮**：害怕被責罰、被排除或不被愛 → **防衛**：壓抑、否認、投射、退化 → **調整**：接受界線，轉向認同與模仿。"],["p","常見表現：想獨占父母、容易吃醋、和同性別家長競爭、變得黏人或愛頂嘴。成人的回應：接納孩子的情感，但仍清楚說明家庭角色與界線，不嘲笑、不責罵。"]]},
+  {t:"解決：認同與超我",c:[["p","競爭（想取代對方）→ 焦慮（擔心受罰或失愛）→ 認同（模仿重要他人）→ 內化（形成規範與良心）。「我想要」逐漸被「我可以怎麼做」取代，{{超我與良心}}開始穩定。"]]},
+  {t:"健康 vs. 固著",c:[["p","**健康的樣貌**：不是沒有衝突，而是能被消化與轉化。能接受照顧者有自己的關係；能把競爭轉化為模仿、學習與成就動機；能理解規則、界線、羞恥與責任；對同性或重要他人形成穩定認同。照顧者若能同時給予愛與限制，孩子比較容易通過。"],["p","**未解決時可能的表現**：過度需要被愛與被肯定、容易吃醋比較競爭、對權威又依賴又反抗、親密關係中害怕第三者、罪惡感或羞恥感過強、角色認同與界線感不穩。"]]}
+ ]],
+ ["note","key","講義最重要的兩句話","(1)「伊底帕斯期是孩子從佔有式的愛走向有界線的愛的重要轉換。」(2)「它是精神分析的概念，不是診斷標籤。」不能只憑單一特徵判斷一個人「有伊底帕斯問題」，仍要看整體生命史與現實脈絡。"],
+ ["note","exam","可能怎麼考","口腔、肛門、性蕾期各自未完成時的臨床議題；伊底帕斯期的定義與核心任務；認同與超我形成的歷程；現代如何看待這個理論（保留、修正，但三角關係、依戀、嫉妒、界線、認同仍有臨床啟發）。"]
+],q:[
+ {q:"口腔期（約 0–1 歲）若未順利完成，日後常見的議題是？",o:["無法信任自己與他人、害怕情愛與親密、低自尊","無法接受自己的性慾","過度勤勉","角色混淆"],a:0,e:"口腔期的議題是信任、親密與自尊。"},
+ {q:"肛門期（約 1–3 歲）常見的未完成議題是？",o:["無法接受與表達敵意、憤怒等情緒，缺乏自主感","對性別角色勝任感出問題","過度依賴權威","害怕被遺棄"],a:0,e:"肛門期與敵意、憤怒的表達，以及自主感、自有力量有關。"},
+ {q:"講義如何描述伊底帕斯期的發展目標？",o:["學會愛不是佔有，關係中有界線與規則","徹底消滅對父母的情感","確定自己的性傾向","不再依賴任何人"],a:0,e:"從「我要全部擁有」走向「我能接受限制」。"},
+ {q:"伊底帕斯期通常放在 Freud 哪一個心理性發展階段討論？",o:["性蕾期（性器期）","口腔期","潛伏期","兩性期"],a:0,e:"伊底帕斯期通常放在性蕾期（性器期），約 3–6 歲。"},
+ {q:"對於「伊底帕斯固著」的判斷，講義提醒？",o:["不能只憑單一特徵判斷，仍要看整體生命史與現實脈絡","只要吃醋就代表有伊底帕斯問題","可以直接當作診斷標籤","與家庭無關"],a:0,e:"它是精神分析的概念，不是診斷標籤。"},
+ {q:"依經典描述，兒童在伊底帕斯期的焦慮之後，健康的解決方式是？",o:["轉向認同重要他人、把規範內化，超我與良心逐漸穩定","永遠壓抑所有感覺","與同性別家長斷絕來往","否認自己有需求"],a:0,e:"認同與內化是解決的關鍵，超我在此階段穩定形成。"}
+]},
+
+/* ---------- 5 ---------- */
+{id:"ch5",n:5,t:"Erikson 的心理社會發展論",sub:"補上「社會」與「一生」",tag:"常考",min:8,b:[
+ ["p","講義用一句話開場：Freud 是**內在本能 × 性心理衝突 × 童年**；Erikson 是**加入社會關係，並把發展延伸到一生**。"],
+ ["h","Erikson 對 Freud 的補充"],
+ ["ul",["主張個人的{{性心理發展}}與{{心理社會發展}}同時發生；每個人要面對的任務是建立起{{自己與所處社會間的均衡關係}}。","Erikson 認為 Freud 對「{{自我}}」的作用解釋得不夠充分，對{{社會環境}}在個人全生命中的影響也未予足夠重視。","{{危機}}等同是生命的{{轉捩點}}：順利克服，人更成熟；遭遇阻撓，人可能更退化。","生命是在每個發展階段所做{{選擇}}的結果。"]],
+ ["note","key","Erikson 最大的貢獻","將 Freud 的「性心理發展」擴展為{{終身的心理社會發展}}，強調自我、社會關係與文化在人格形成中的作用。從「童年＋性心理」走向「一生＋心理社會」。"],
+ ["h","八階段與 Freud 對照（點一列看說明）"],
+ ["widget","erik"],
+ ["note","fix","講義小提醒","講義的對照圖把 Freud 的階段寫成：口腔期、肛門期、性蕾期、潛伏期、性器期，再以「性器期（持續）」對應成年後三個階段。這裡的「性器期」應理解為青春期後的兩性期（生殖期）。另外，各階段年齡為一般教科書常見的年齡帶，講義本身未標示。"],
+ ["note","exam","可能怎麼考","配對：階段與心理社會危機；比較題：Freud 與 Erikson 的差異（關注焦點、社會因素、發展期間、對自我的重視）；申論：以某一階段說明兩位理論家的觀點如何互補。"]
+],q:[
+ {q:"Erikson 相較於 Freud，最大的補充是？",o:["加入社會關係與文化，並把發展延伸到一生","只研究嬰兒期","否定潛意識","強調死亡本能"],a:0,e:"從「童年＋性心理」擴展為「一生＋心理社會」。"},
+ {q:"學齡前兒童期（約 3–6 歲）的心理社會危機是？",o:["創造進取 vs. 罪惡感","信任 vs. 不信任","勤勉 vs. 自卑","親密 vs. 孤立"],a:0,e:"與 Freud 的性蕾期（伊底帕斯期）同一階段。"},
+ {q:"嬰兒期的心理社會危機，對應 Freud 哪一階段？",o:["口腔期","肛門期","潛伏期","兩性期"],a:0,e:"信任 vs. 不信任，對應口腔期。"},
+ {q:"青少年時期的心理社會危機是？",o:["自我認同 vs. 角色混淆","勤勉 vs. 自卑","生產 vs. 停滯","統整 vs. 破滅"],a:0,e:"青少年階段的核心是找到自我認同，避免角色混淆。"},
+ {q:"依 Erikson，「危機」代表？",o:["生命的轉捩點，可能因克服而更成熟，也可能因受阻而更退化","一定會造成精神疾病","只發生在童年","與社會無關"],a:0,e:"危機是轉捩點，結果取決於是否順利克服。"}
+]},
+
+/* ---------- 6 ---------- */
+{id:"ch6",n:6,t:"治療歷程、角色與基本技術",sub:"兩大目標、空白螢幕、修通、六大技術、古典 vs. 動力取向",tag:"必考",min:14,b:[
+ ["h","治療目標"],
+ ["p","佛洛伊德學派心理分析治療有兩個目標：(1) 將{{潛意識化為意識}}；(2) {{強化自我功能}}，使個人行為更依據現實，少受本能衝動或非理性罪惡感驅動。"],
+ ["note","case","講義案例：32 歲外商高階主管","**主訴**：面臨升遷考核，頻繁出現嚴重焦慮、失眠，主管會議前夕多次腹痛嘔吐，但內科檢查無實質病因。\n**目標一（潛意識→意識）**：透過自由聯想與夢（在父親嚴厲注視下打翻水杯而被責罵），個案覺察到潛意識信念：「一旦表現得比父親（男性權威）更優秀、爬得更高，就會遭受懲罰與拋棄。」表面的焦慮，其實連結到對超越權威的罪惡感與恐懼。\n**目標二（強化自我）**：現實檢驗——分清「現在 32 歲的專業經理人」與「面對嚴父的無力小男孩」，並檢視公司的真實回饋；自我調節——告訴自己「我有權利獲得成就，追求成功並不等於背叛或傷害權威」。\n**結果**：焦慮與身體化症狀顯著下降，順利通過考核。"],
+ ["h","治療者的功能與角色"],
+ ["ul",["古典分析師以「匿名」身分進行治療，稱為{{空白螢幕}}取向（blank-screen approach）。","{{移情關係}}是精神分析理論的重要基礎（第 7 章）。","主要功能：協助當事人重獲{{去愛、去工作與玩樂的自由自在感}}；幫助獲得自我覺察、真誠與更有效能的人際關係；以合乎現實的方式處理焦慮；對內在衝動與非理性行為善加控制。","工作順序：先建立**工作關係** → 大量**聆聽與詮釋**（特別留意**抗拒**）→ 了解真義後，在**適當時機**做出**適切的詮釋**。","一句話：將嬰兒期的依戀轉變為成熟的成人依戀。"]],
+ ["h","當事人的經驗"],
+ ["ul",["{{自由聯想}}是精神分析的{{基本規則}}（fundamental rule）；躺在長沙發的目的，是鼓勵當事人做深度、不自我監控的回想，說出感受、經驗、聯想與幻想。","當事人須承諾固定程序的**密集式**治療；話語內容就是治療的核心。","分析期間通常要求當事人**不要做激烈的生活改變**，如離婚或離職。"]],
+ ["h","治療關係：古典 vs. 當代"],
+ ["ul",["古典分析師：冷眼旁觀，對治療關係做出評論並提出詮釋，幫助當事人產生領悟。","當代關係取向分析：不固守「不涉入」與全然客觀，而是把**治療關係的本質**視為帶來改變的關鍵因素。"]],
+ ["h","洞察與修通"],
+ ["ul",["{{洞察}}（insight）：例如「原來我害怕別人不喜歡我，所以總是壓抑自己的需要。」**有了洞察並不代表問題就解決了。**","{{修通}}（working-through）：在治療中反覆理解、經驗、感受並處理內在衝突，使僵化的心理模式逐漸被看見、理解，最後產生較穩定的改變。探索的多是源自童年早期的潛意識題材與自我防衛方式。","歷程：發現問題 → 理解問題 → 在關係中重新經驗 → 再次理解 → 修正原有模式 → 逐漸內化新的經驗。因此修通特別強調**時間、反覆與深入應用**。"]],
+ ["note","trap","洞察 ≠ 修通","洞察是「懂了」；修通是「懂了之後，還要在關係裡一次又一次重新經驗、消化，才會真的改變」。這是常見的簡答題。"],
+ ["h","心理動力治療與古典精神分析的差異"],
+ ["table",["面向","古典精神分析","心理動力治療"],[
+  ["目標","人格重建構","有限的特定目標（用於此的時間較多）"],
+  ["躺椅","使用","很少使用"],
+  ["頻率","密集","每週次數較少"],
+  ["介入","詮釋為主","較多支持性介入：再保證、同理與支持"],
+  ["治療者立場","強調中立","不再強調中立"],
+  ["焦點","內在幻想題材","目前實際的困擾；較專注雙方交互的移情與反移情"]
+ ]],
+ ["h","六大基本技術"],
+ ["ol",["{{維持分析的架構}}（第 10 章）","{{自由聯想}}","{{詮釋}}","{{夢的解析}}","{{抗拒的分析}}（第 8 章）","{{移情作用的分析}}（第 7 章）"]],
+ ["h","動力取向治療的認識"],
+ ["ul",["精神分析是動力取向治療的基礎：它為個案表面渾沌的內心世界帶來秩序，並提供進入與理解心靈深處的方法。","理論幫助治療師決定：**說什麼？何時說？如何說？哪些暫時先不說？**","必備人格特質：寬容、忍耐、節制。","治療的機轉：使內化的壞客體外化、成為治療師 → 置換內在客體 → 使個案在退化之中修復早期的客體關係。","「每個人內在都住著兩個人，一個是本質的我，另一個是內化的客體。」"]],
+ ["note","exam","可能怎麼考","治療的兩大目標並舉例（可直接用上面的案例）；空白螢幕、自由聯想、修通的定義；古典與動力取向差異；六大技術簡述；洞察與修通的差別。"]
+],q:[
+ {q:"古典精神分析治療的兩大目標是？",o:["將潛意識化為意識；強化自我功能","消除所有症狀；讓個案服從","增加本我能量；減弱超我","建立診斷；開立處方"],a:0,e:"目標是使潛意識意識化，並強化自我功能，使行為更依據現實。"},
+ {q:"「空白螢幕」取向指的是？",o:["分析師以匿名、不揭露自己的方式進行治療","治療室內不放任何家具","個案不能說話","治療師不做記錄"],a:0,e:"古典分析師以匿名身分，避免影響移情的呈現。"},
+ {q:"精神分析的「基本規則」是？",o:["自由聯想","夢的解析","中立","時間限制"],a:0,e:"自由聯想是基本規則，躺椅的目的是鼓勵不自我監控的回想。"},
+ {q:"下列何者較符合「心理動力治療」（相較於古典分析）？",o:["較少使用躺椅、每週次數較少、較多支持性介入","每週多次、以人格重建構為主","不處理目前的困擾","完全不處理移情"],a:0,e:"動力取向多為有限特定目標、較少用躺椅、較多支持，較專注於目前困擾。"},
+ {q:"下列關於「洞察」與「修通」的敘述，何者正確？",o:["有了洞察不代表問題就解決，需要修通反覆理解與重新經驗","洞察等於修通","修通只需一次","修通不需要治療關係"],a:0,e:"修通強調時間、反覆與深入應用。"},
+ {q:"下列哪一項不屬於講義列出的六大基本技術？",o:["行為作業指派","維持分析的架構","抗拒的分析","移情作用的分析"],a:0,e:"六大技術：維持架構、自由聯想、詮釋、夢的解析、抗拒分析、移情分析。"}
+]},
+
+/* ---------- 7 ---------- */
+{id:"ch7",n:7,t:"移情與反移情",sub:"從「污染」到「工具」，Freud、Klein、獨立學派的差別",tag:"必考",min:16,b:[
+ ["h","什麼是移情（transference）"],
+ ["ul",["定義（第 1 份講義）：當事人潛意識地把過去對重要他人的情感與幻想，轉到分析師身上。它含有過去未解決、在現在生活中不斷重複出現的潛意識衝突。","定義（第 2 份講義）：移情是**早期對世界的理論建構**，源自嬰兒與照顧者的互動經驗，內化成「我該怎麼對待他人、他人又會怎麼對待我」的基本假設。它非常早期就形成，會主導我們看待人際互動與情感關係。"]],
+ ["table",["成人的反應","兒童可能內化的信念"],[["「你可以去試試」","世界是支持我的、我有能力探索"],["「不行，很危險」","世界是不安全的、我無法勝任"]]],
+ ["p","這些早期互動構成兒童內在世界的{{基礎地圖（mental map）}}，影響自我價值與對他人意圖的判斷。在治療中，病人把這套「對世界的早期理論」帶進治療室，把治療師視為「{{好乳房}}」或「{{壞乳房}}」的代表；治療師的任務，是透過辨識移情的內容，協助病人重建更整合、真實的人際理解。"],
+ ["h","移情：不是病，而是模式"],
+ ["p","移情是學習生活的方式，是心理記憶的重現機制，不是「病態現象」。例：小時候常被責罵的人，長大後預期他人對自己有敵意，這就是移情的投射。它在下列情況才成為問題："],
+ ["table",["特徵","解釋"],[["{{固著}}","過往經驗被反覆套用在所有關係，缺乏彈性"],["{{阻礙關係發展}}","無法建立新的互動模式，甚至退縮、逃避"],["{{感覺卡住}}","移情模式造成內在困擾或人際重複挫敗"]]],
+ ["note","case","阿傑","被前任突然背叛，現在只要伴侶晚回訊息，就認定對方變心。**固著**：把「晚回訊息＝背叛」反覆套用；**阻礙關係發展**：不停查問、試探或冷戰，使伴侶無法與他建立信任；**感覺卡住**：伴侶多次解釋在工作，他仍無法安心。"],
+ ["h","治療中處理移情的兩個原則"],
+ ["ul",["**不是所有移情都需要處理**：只有當它「干擾治療進行」時才需辨識與解構（例：把治療師誤認為過去傷害自己的人，導致無法信任而難以工作）。","**處理要「剛剛好」**：太早處理→病人防衛過強、無法承受；太晚處理→治療卡關、難以前進。"]],
+ ["h","什麼是反移情（countertransference）"],
+ ["p","反移情原指{{治療師對病人產生的個人情感反應}}，是對病人移情投射的反應，可以是無意識的。演變過程是本章的重點：Freud 最初視它為需要「清除」的「污染」，像外科手術前的無菌操作；現代觀點（尤其是後現代與關係取向）則視它為{{有價值的臨床資料}}，透過自我覺察與督導，可轉化為理解病人內在狀態的線索。"],
+ ["table",["","佛洛伊德觀點","克萊因學派觀點"],[["反移情是什麼","治療師自己的問題","病人潛意識溝通的內容"],["怎麼處理","需要排除與控制","需要理解與回應"],["治療師的位置","中立、抽離","進入關係互動與感受"]]],
+ ["p","講義在這裡提問：「你們會更同意誰的觀點呢？」（想一想：助人者的感受，會如何影響彼此的關係？）下面用四個分頁整理各學派。"],
+ ["tabs",[
+  {t:"克萊因學派",c:[["p","反移情是病人潛意識溝通的方式，是移情的一部分，來自病人的內在世界。分析師的情緒（被迫害、被愛、被攻擊）是病人幻想投射的結果，是**訊息的「接收器」**，反映病人「部分客體」或「完整客體」經驗的重演。"],["p","**核心機制：投射認同**。個案把自己無法承受的內在部分（或早期客體形象）投射到治療師身上，並透過潛意識的言語與非言語行為施壓，迫使治療師「演出」那個形象。"],["note","case","情境","經常被拋棄的個案不斷質疑：「你是不是覺得我很麻煩？你根本不想聽我說話，你只是在敷衍我。」治療師胸口發悶、極度委屈與不耐煩，甚至浮現「既然你覺得我沒用，那你就去找別人啊！」。治療師沒有發洩，而是觀察自己的反應，意識到：個案正透過投射認同，迫使我成為他童年記憶中那位冷漠、拒絕他、動輒想推開他的母親。承接並覺察這股被塑造的情緒，便能理解個案深層的恐懼與關係腳本。"]]},
+  {t:"獨立學派（Winnicott）",c:[["p","反移情不只是治療師自己的反應，也可能反映病人**尚未被滿足的情感與關係需求**：移情代表病人渴望卻未得的經驗。治療師提供「夠好的客體」與{{抱持性環境}}（holding environment），承接病人的混亂、無助與渴望。工作焦點是創造安全、解釋情緒來源與需求。"],["note","case","情境","外表精明幹練的高階主管，談到挫敗時低下頭長久沉默，雙手緊抓抱枕縮在沙發角落。治療師湧上強烈的保護欲與憐惜，感覺眼前的成年人瞬間縮小成脆弱無助、極度害怕受罰的幼童。治療師意識到，這是共感到個案幼年從未被承接的依附需求（一展現脆弱就被苛責，被迫過早長成「假我」），於是放下分析與詮釋，維持溫和穩定的陪伴，讓個案停留在退行狀態，體驗「即使我很脆弱，這裡也不會塌陷」的修復經驗。"]]},
+  {t:"功能性觀點",c:[["ul",["**比昂（Bion）**：治療師如{{容器}}（container），承納病人的困惑與難以承受的情緒。","**自體心理學（Kohut）**：治療師提供{{鏡映}}（mirror）功能，或成為被理想化的對象（idealizing function）。"]]]},
+  {t:"整合看法",c:[["p","可作為申論收尾的整合說法："],["ul",["反移情既可能是治療師個人議題（Freud 的擔憂仍然有效），也可能是病人溝通與需求的線索（Klein、獨立學派的貢獻）。","關鍵是**覺察與督導**：不把感受直接付諸行動，而是把它當成資料，幫助形成假設。","例：治療師留意到自己被拒學的孩子引動了強烈的無力感，這份無力感就可能是孩子內在感受的線索。"]]]}
+ ]],
+ ["note","add","背景補充","一般認為 Paula Heimann（1950）是把反移情視為理解病人的工具的重要推手，之後由 Racker、Bion、Ogden 等人在投射認同的脈絡中發展。這一點不在講義中，答題時可視需要引用。"],
+ ["note","trap","反移情 ≠ 治療師失控","講義把反移情定義為「治療師對病人的情感反應」，也提到治療師因自己的衝突被引發而喪失客觀性、做出非理性反應的情形。臨床上的差別在於：有覺察、並用來理解個案，就是工具；沒有覺察、直接行動，才是問題。"],
+ ["note","exam","可能怎麼考","定義移情與反移情；移情在何時成為問題、如何處理；比較 Freud、Klein、獨立學派的反移情觀；給一段情境（如個案質疑「你是不是覺得我很麻煩」），辨識投射認同並說明治療師如何運用反移情。"]
+],q:[
+ {q:"下列何者最符合講義對「移情」的定義？",o:["當事人潛意識地把過去對重要他人的情感與幻想轉到治療師身上","治療師對個案產生的情感","個案對治療師的實際評價","治療師的價值觀"],a:0,e:"移情是當事人把過去對重要他人的感情與幻想，轉投注到治療師身上。"},
+ {q:"依講義，什麼時候移情需要被處理？",o:["當它干擾治療進行時","所有移情都必須立刻處理","絕對不能處理","只有在最後一次晤談"],a:0,e:"原則一：不是所有移情都要處理；原則二：處理要「剛剛好」。"},
+ {q:"移情成為「問題」的三個特徵是？",o:["固著、阻礙關係發展、感覺卡住","隔離、退化、否認","洞察、修通、詮釋","本我、自我、超我"],a:0,e:"移情從人際理論變成心理桎梏時，具固著、阻礙關係發展、病人感覺卡住等特徵。"},
+ {q:"下列何者較符合克萊因學派對反移情的觀點？",o:["反移情是病人潛意識溝通的內容，需要理解與回應","反移情是治療師的問題，需要排除","反移情與治療無關","治療師應完全抽離"],a:0,e:"Freud：治療師的問題，需排除；Klein 學派：病人潛意識溝通，需理解。"},
+ {q:"個案不斷質疑「你是不是覺得我很麻煩」，治療師感到委屈與不耐煩，並意識到自己正被塑造成冷漠、推開他的母親。這主要說明？",o:["投射認同與反移情的臨床運用","昇華","置換","現實焦慮"],a:0,e:"個案把無法承受的內在部分投射到治療師身上，並迫使其演出該形象。"},
+ {q:"溫尼考特（獨立學派）的觀點中，治療師提供的是？",o:["抱持性環境，承接個案未被滿足的關係需求","絕對中立的空白螢幕","嚴格的詮釋","行為作業"],a:0,e:"夠好的客體與抱持性環境，讓個案在退行中修復早期經驗。"},
+ {q:"比昂（Bion）以什麼比喻治療師的功能？",o:["容器（container）","鏡子","地圖","空白螢幕"],a:0,e:"比昂：治療師如容器，承納困惑情緒；鏡映與理想化是 Kohut 的自體心理學。"}
+]},
+
+/* ---------- 8 ---------- */
+{id:"ch8",n:8,t:"防衛與阻抗（進階）",sub:"Brenner 的功能觀、性格是防衛的結晶、妥協形成",tag:"必考",min:18,b:[
+ ["note","add","閱讀提醒","本章涉及憂鬱與自殺意念的理論說明。若閱讀時感到不適，請先暫停，並向可信任的人或專業者尋求支持。"],
+ ["h","心理衝突與妥協"],
+ ["ul",["心靈總是存在於衝突狀態：(1) **內在結構間**的衝突（本我、自我、超我之間的張力）；(2) **自體與他人之間**的衝突。即使是人際衝突，也會被表徵進入個體的內在精神世界，所以衝突其實都屬於內在。","{{防衛}}是面對衝突時的**妥協手段**；自我在衝突中扮演**「外交家」**，服務於內部各種力量。","成功的防衛能保持穩定；失敗的防衛則表現為心理症狀或人際困擾。","防衛機制是精神分析對普通心理學最重大的貢獻之一，地位甚至超越潛意識等概念。"]],
+ ["h","妥協形成（compromise formation）"],
+ ["p","當內在需求彼此衝突，心靈會找到一種「兩邊都能勉強接受」的表達方式，也就是{{折衷的結果}}。它可能化為症狀、夢、習慣、選擇，或反覆出現的關係模式。生活中的例子：既渴望親近，又害怕受傷，因此總是靠近後再退開。理解妥協形成，不是責任自己，而是看見心靈曾如何努力維持平衡。"],
+ ["table",["例子","內在衝突","妥協的方式","可能的代價"],[
+  ["憂鬱","對重要他人失望或生氣，又害怕表達憤怒會破壞關係","把責備轉向自己，以罪惡感、自我否定或退縮維持內在的關係","低落、失去興趣、疲憊、功能受影響"],
+  ["強迫症狀","不想要的念頭與自我形象、道德標準或安全需求發生衝突","反覆檢查、清洗、計數，試圖抵消危險並換取短暫安心（隔離、抵消）","焦慮暫時下降，卻強化強迫行為，耗時並干擾日常生活"]
+ ]],
+ ["p","講義都特別註明：這只是心理動力學的**一種理解**；憂鬱症由生物、心理、社會與環境因素共同影響，強迫症也可透過專業評估與實證治療獲得改善。"],
+ ["h","為何有防衛：人類嬰兒的困境"],
+ ["ul",["戰鬥－逃跑反應對人類嬰兒無效：無法逃跑也無力反擊。","動物會裝死、冬眠、變色，是生理上的欺騙或偽裝；心理上的類比是**精神退縮**，例如住院或戰爭中孤立的嬰兒封閉自己，若無人察覺介入可能走向死亡。這說明防衛的演化與依附、關係需求緊密相關。","防衛機制就是：你偽裝成一個不是你的狀態，或去改變、掩飾自己。","退縮的極端形式：憂鬱中的自殺念頭可被理解為精神退縮的極端體現，不是單純的死亡渴望，而是對**哀悼過程的防衛**（想與死者「在一起」以逃避哀傷）。"]],
+ ["h","人格層面的偽裝"],
+ ["table",["概念","提出者","內容"],[
+  ["{{虛假自體}}（false self）","Winnicott","為了生存而掩蓋真實自體"],
+  ["{{垂直分裂}}","Kohut","同一個人在人格中同時存在高度自律與極端放縱的部分"],
+  ["{{好似人格}}（as-if personality）","—","表面「扮演」某類角色，但內在空洞、無核心"]
+ ]],
+ ["h","不同年齡的心理威脅"],
+ ["table",["階段","主要威脅","對應焦慮"],[["初生期","刺激過多、客體缺席","毀滅焦慮、分離焦慮"],["嬰兒期","失去愛、被冷落","自尊焦慮、羞辱感"],["3–5 歲","可能被報復、懲罰","閹割焦慮（當代更廣義為報復／懲罰焦慮）"]]],
+ ["note","fix","講義小提醒","投影片寫成「闡割焦慮」，應為「閹割焦慮」（castration anxiety）。答題請用「閹割」。"],
+ ["h","防衛的系統化：Anna Freud 的清單"],
+ ["p","壓抑是最初的防衛，源自「不想知道／不想感覺」，後來發展為潛意識與意識之間的上下壓制。Freud 提出結構理論後，「防衛」成為總稱，底下涵蓋多種機制。講義以 Anna Freud 的清單為代表："],
+ ["table",["機制","說明"],[["退行","回到更早期的心理階段反應"],["壓抑","將不願感受的內容壓入潛意識"],["反向形成","情感表達與內在相反（如「我愛你」對抗「我恨你」）"],["隔離","把情緒與經驗分離，理性化應對"],["抵消","做一件事後用另一行為抵銷它（常見於強迫症）"],["投射與內攝","自我與他人的界線移動、吸收或外投"],["轉向自身","把本欲針對他人的攻擊轉為懲罰自己"],["昇華","把衝突能量轉為可接受或有價值的形式（創作、工作等）"]]],
+ ["p","自我心理學（含當代 Freudian）被稱為「**衝突－防衛**」取向：防衛是治療中最先能接觸到的線索。**理解防衛 → 推測背後衝突 → 再透過移情觀察衝突如何重現於治療關係。**"],
+ ["h","躁狂性防衛與憂鬱"],
+ ["ul",["**躁狂性防衛**（Klein）：出現在從「偏執－分裂位態」過渡到「憂鬱位態」之際。進入憂鬱位態需經歷**哀悼**，躁狂性防衛就是對哀悼歷程的逃避；它不是臨床躁症，而是對失落與悔恨的否認，用過度快樂、誇張行動、全能感掩蓋痛苦與哀傷。","**憂鬱不是單一病因**：可視為多條心理路徑（失落、自我攻擊、孤立無援感等）的終點；治療任務是「回溯與理解」，探索每位病人的憂鬱由哪種心理歷程引發，而不是立即壓抑症狀。"]],
+ ["h","Brenner：防衛是「功能」，不是特定技巧"],
+ ["p","防衛機制之間的界線常不清，經常交互出現或混用。布倫納（Charles Brenner）認為：任何心理活動只要具有{{說「不」}}或對抗的功能（對焦慮、憂鬱、罪惡感），無論是情緒、想法或行為，當下就扮演防衛的角色。"],
+ ["ul",["**正向情緒作為防衛**：妻子對丈夫的不合理要求感到憤怒，卻立刻內疚害怕，反而變得無比體貼、熱情，做大餐討好。此時的愛意是為了對憤怒說「不」。","**理性思考作為防衛**：被問到分手時胸口的感覺，案主立刻滔滔不絕引用榮格、依附理論分析。智性化築起高牆，對「心碎痛楚」說不。","**適應良好行為作為防衛**：高階主管一安靜下來就被空虛與低價值感吞噬，於是把行程排滿、半夜回郵件。「忙碌」是對無價值與寂寞說不。"]],
+ ["p","看到防衛時的兩個關鍵提問：「**誰或什麼被否認了？被拒絕了？**」「**這種偽裝的本質是什麼？**」防衛是對原始衝突的「最佳可行回應」，是心靈在無法承受真實時採用的合理化生存機制。"],
+ ["h","小林案例：多種防衛交疊（點句子看解析）"],
+ ["note","case","背景","小林的父親長年嚴厲、控制慾強，驟逝後，小林笑著對諮商師說了下面這段話。"],
+ ["widget","xiaolin"],
+ ["h","防衛即阻抗；性格是防衛的結晶"],
+ ["ul",["防衛像**城堡**：保護我們免於外界衝突與內在痛苦，也可能讓我們困於其中。自由聯想時，防衛會擋住某些念頭浮現，有時甚至是為了「保護他人」（例：內疚、攻擊性）而不讓念頭冒出來。這就是{{阻抗}}。","{{性格}}是早期發展中形成的一組「固定防衛組合」：初期有幫助，後來卻可能成為限制我們的心理「外骨骼」，使人成為自己防衛的「囚犯」。"]],
+ ["table",["","過度獨立的強人","習慣討好的好好先生"],[
+  ["童年情境","父母衝突、情緒不穩；哭泣換來忽視或痛罵","家庭嚴厲評判，不滿或反抗會被懲罰或撤回愛"],
+  ["防衛形成","壓抑脆弱＋反向形成（全能自足）：「我不需要任何人」","壓抑與解離攻擊性，認同攻擊者、迎合討好換取安全"],
+  ["外骨骼硬化","幹練、堅毅、永遠不向人求助","溫和有禮、沒有脾氣、極佳的合作者"],
+  ["成為囚犯","親密關係中築牆，一靠近就窒息；職場危機也無法求援","失去劃定界線與表達真實自我的能力，被剝削也說不出「不」；攻擊性轉向自身，成為偏頭痛、潰瘍、慢性疲勞"]
+ ]],
+ ["note","key","治療態度","個體在治療中學到的是：「我不是錯的，只是我的應對方式已經過時了」，並發展出對自己更深的同理與接納。精神分析**不以「成熟 vs. 不成熟」簡單評價防衛**，重點是：它為了解決哪一種特定衝突？為何在那個時候選擇它？"],
+ ["note","exam","可能怎麼考","防衛的功能與局限；用 Brenner 的觀點說明「正向行為也可能是防衛」；給案例辨識多重防衛（小林型）；為何說「性格是早期防衛的結晶」；防衛與阻抗的關係；躁狂性防衛的定義。"]
+],q:[
+ {q:"布倫納（Brenner）對防衛的觀點是？",o:["任何心理活動只要具有對痛苦「說不」的功能，就可能是防衛","防衛只有特定的十幾種","防衛一定是病態","防衛只發生在治療室"],a:0,e:"防衛是一種「功能」，而不是某個特定器官或單一技巧。"},
+ {q:"小林說「你今天臉色好沈重，好像要哭了一樣」，主要是哪一種防衛？",o:["投射","昇華","認同","補償"],a:0,e:"把自己不敢碰觸的悲傷推到諮商師身上。"},
+ {q:"「虛假自體」的提出者是？",o:["Winnicott","Kohut","Bion","Erikson"],a:0,e:"Winnicott：為了生存而掩蓋真實自體。垂直分裂是 Kohut。"},
+ {q:"「躁狂性防衛」的意涵是？",o:["以過度快樂、誇張行動、全能感否認失落與悔恨，逃避哀悼","臨床上的躁症發作","單純的心情很好","一種成熟的昇華"],a:0,e:"出現在偏執－分裂位態過渡到憂鬱位態時，是對哀悼歷程的防衛。"},
+ {q:"為何說「性格是早期防衛的結晶」？",o:["性格是早期形成的固定防衛組合，僵化後可能成為限制自己的外骨骼","性格與防衛完全無關","性格由基因決定","防衛不會影響成年後的關係"],a:0,e:"講義：性格是早期發展中形成的固定防衛組合，失去彈性就成了防衛的囚犯。"},
+ {q:"3–5 歲兒童的主要心理威脅與對應焦慮是？",o:["可能被報復、懲罰；閹割焦慮","刺激過多；毀滅焦慮","失去愛；羞辱感","客體缺席；分離焦慮"],a:0,e:"3–5 歲：可能被報復、懲罰，對應閹割焦慮（當代更廣義為報復／懲罰焦慮）。"},
+ {q:"強迫症狀在動力觀點中，可被理解為哪種防衛與衝突的妥協？",o:["禁忌念頭與防衛力量（如隔離、抵消）之間的妥協形成","單純的壞習慣","本我完全勝出","超我消失"],a:0,e:"反覆檢查、清洗、計數，是試圖抵消危險、換取短暫安心的妥協形成。"}
+]},
+
+/* ---------- 9 ---------- */
+{id:"ch9",n:9,t:"衝突模式與缺陷模式",sub:"兩種理解病理與介入焦點的視角",tag:"必考",min:9,b:[
+ ["p","精神分析的發展脈絡中，「衝突模式（Conflict Model）」與「缺陷模式（Deficit Model，亦譯匱乏模式）」代表對心理病理根源與治療介入焦點的兩種核心理解視角。"],
+ ["table",["","衝突模式","缺陷模式"],[
+  ["理論來源","古典精神分析（Freud）、自我心理學","客體關係學派、Kohut 自體心理學、依附理論"],
+  ["核心假設","心理結構本身完整；痛苦與症狀來自結構內各股力量無法調和的內在衝突","問題不在力量衝突，而在心理結構的發展停滯、未成形或缺失"],
+  ["機制","本能（本我驅力）vs. 禁制（超我、現實）碰撞；自我用防衛與{{妥協形成}}避免訊號焦慮，防衛不完全時症狀成為折衷","早期環境失敗（如撫育者長期缺乏足夠好的回應）→ 未建立整合穩固的自體感或穩定的內在客體表徵，留下空洞、脆弱與易碎性"],
+  ["防衛的意義","為了壓抑衝突","為了求生：避免內在空洞感與自體瓦解（如極端放縱、分裂、投射認同、好似人格）"],
+  ["代表族群","神經症層次；自我邊界穩固、現實感佳","自戀型、邊緣型人格障礙、嚴重心身疾病或早期創傷"],
+  ["介入技術","中立、節制、{{詮釋}}","{{同理沉浸}}、容納（holding／containing）、借用自體客體功能、修正性情感經驗"],
+  ["治療目標","讓潛意識衝突意識化，辨識並鬆動防衛，分析移情中早期伊底帕斯期衝突，促成頓悟","提供「足夠好」的關係容器，修復早期關係破裂（rupture and repair），促進蛻變內化，重建缺失的心理結構"]
+ ]],
+ ["note","key","一句話對比","衝突模式：「結構是完整的，但裡面在打架」→ 用**詮釋**讓衝突浮現。缺陷模式：「結構本身缺了一塊」→ 用**關係的容納**把缺的補起來。"],
+ ["note","trap","常見錯誤","不要寫成「衝突＝比較輕、缺陷＝比較重」的單純輕重之分；區別在於**病理的觀點**與**介入焦點**，且兩者不互斥。第 11 章的「防衛層級」與「自我功能」評估，就是在判斷個案較偏哪一種。"],
+ ["note","add","現代臨床","許多當代取向會整合兩者：同一位個案可能在某些領域是衝突、某些領域是缺陷，因此需要在詮釋與容納之間彈性調整。這是補充，不在講義中。"],
+ ["note","exam","可能怎麼考","比較兩種模式（病理觀、代表族群、技術、目標）；給一段個案描述（例如外表誇大、內在羞愧空洞；或因升遷罪惡感而焦慮失眠），判斷偏向哪種模式並說明介入方向。"]
+],q:[
+ {q:"下列何者最符合「衝突模式」的核心假設？",o:["心理結構完整，症狀來自內在各股力量無法調和的衝突","心理結構發展停滯而缺失","問題全來自現實環境","不需要防衛"],a:0,e:"衝突模式：結構完整，症狀是衝突與防衛的妥協形成。"},
+ {q:"缺陷模式的代表族群與介入技術，較接近下列何者？",o:["自戀型、邊緣型個案；同理沉浸、容納、修正性情感經驗","神經症個案；純粹詮釋","所有個案；藥物治療","只適用於兒童"],a:0,e:"缺陷模式為解釋古典衝突理論難以有效治療的邊緣型與自戀型個案而發展。"},
+ {q:"一位外表自信誇大、內在卻極度羞愧空洞、害怕自體瓦解的個案，較接近？",o:["缺陷模式的視角","衝突模式的視角，且結構完整","不需要評估","與早期經驗無關"],a:0,e:"防衛是為了避免空洞與自體瓦解，是缺陷模式的典型描述。"},
+ {q:"衝突模式的治療目標不包括下列哪項？",o:["以同理沉浸修復早期關係破裂並重建缺失的心理結構","讓潛意識衝突意識化","鬆動防衛","促成頓悟"],a:0,e:"以修復破裂、重建結構為主是缺陷模式的目標。"},
+ {q:"缺陷模式提到「蛻變內化」，意思最接近？",o:["個案在足夠好的關係中，逐步把功能內化為自己的心理結構","個案模仿治療師的穿著","個案壓抑感覺","治療師代替個案決定"],a:0,e:"透過關係容器修復早期破裂，促進 transmuting internalization，補足缺失結構。"}
+]},
+
+/* ---------- 10 ---------- */
+{id:"ch10",n:10,t:"治療架構",sub:"外在架構、內在架構，以及為什麼收費也是療效的一部分",tag:"必考",min:11,b:[
+ ["p","「治療架構（therapeutic frame）」是治療歷程中一套明確、穩定且一致的外在設定與內在原則，是心理治療安全、有效進行的「{{容器}}（container）」，就像分析室的牆、分析者的態度與規則，共同構成一個「可以發生變化的空間」。"],
+ ["h","外在架構與內在架構"],
+ ["table",["","外在架構 External frame","內在架構 Internal frame"],[
+  ["性質","治療者與來談者共同建立的具體、穩定「設定」（setting）；像電影院、教堂、遊樂場，其內在現實不同；提供未知得以浮現的時空","治療者內心對治療關係與歷程的基本態度，屬治療性立場的一部分；治療師心智的一個區域，維持外在架構並保有彈性、向內聆聽自己"],
+  ["要素","**治療時間**（每次長度如 50 分鐘、每週頻率）；**地點**（實體或線上）；**費用**（每次收費、遲到與缺席規範）；**邊界**（角色與私人界限，不進行私交）","**保密原則**；**情緒容納**（共感、理解、承接）；**中立與去中心化**（不強加自己的價值觀）；**移情與反移情覺察**"]
+ ]],
+ ["h","為何架構這麼重要"],
+ ["ol",["**提供安全感與預測性**：一致的設定帶來穩定與信任，是探索潛意識與脆弱經驗的基礎。","**容納混亂與退行**：在穩固架構下，個案可以退行（如表達童年式依賴）、發展移情，而不致崩潰。","**界定治療關係角色**：界線清楚，防止角色混淆或治療過度延伸至私人關係。","**分析移情與反移情的工具**：個案對時間、規範的態度，往往反映其內在關係模式；治療者的反應也可能來自個案投射，透過架構的穩定性得以辨識。"]],
+ ["h","架構被破壞時"],
+ ["table",["架構問題","常見後果"],[["時間不固定、時常更改","個案產生焦慮、不安全感、治療依附混亂"],["收費不明、過於彈性","對價值、承諾與責任的困惑與議題浮現"],["過度自我揭露、私交","模糊界線，可能引發倫理問題與混淆移情"],["無法處理情緒投射","移情／反移情無法被解析，治療效果受限"]]],
+ ["h","現代趨勢"],
+ ["table",["傳統精神分析","現代心理治療（關係分析、自體心理學）"],[["架構較僵固","架構更有彈性與協商性，但仍堅守邊界"],["較少解釋規範","將設定過程視為「共創關係」的一部分"],["僅治療者主導","鼓勵來談者參與討論設定與反應"]]],
+ ["note","key","講義金句","「治療架構不是附屬品，而是治療本身的一部分。」「架構穩固，心才敢鬆動；邊界清楚，探索才能深入。」"],
+ ["h","實務：如何向個案解釋為何要收費？"],
+ ["p","講義給了三個說明方向（可當作實務題的答題要點）："],
+ ["ol",["**你不用照顧我的情緒**：日常中向朋友傾倒太多負面情緒會覺得虧欠、擔心對方受不了而離開；收費確立這是專業關係，不需要背負回報的人情壓力，這個空間完全屬於你。","**保障關係的純粹與界線**：付費確保治療師不帶個人私心或期待介入生活，能保持客觀與穩定，成為專注承載痛苦的容器，讓空間安全、可預期。","**這是對自己的投資與承諾**：探索內在雖不容易，但這是為自己負起責任、做出改變的過程；成果不是治療師「給予」的，而是在安全架構下靠自己的努力找回來的。"]],
+ ["note","exam","可能怎麼考","說明治療架構的意義與內外要素；為何架構是療效的一部分；情境題：個案常遲到、要求延長時間、想加治療師社群帳號，請說明治療師如何看待（用「架構反映內在關係模式」＋「維持界線」作答）；如何解釋收費。"]
+],q:[
+ {q:"下列何者屬於「外在架構」的要素？",o:["治療時間、地點、費用、邊界","保密原則","情緒容納","移情與反移情覺察"],a:0,e:"外在架構：時間、地點、費用、邊界。後三者屬內在架構。"},
+ {q:"下列何者屬於「內在架構」？",o:["中立與去中心化","每次 50 分鐘","收費金額","實體或線上"],a:0,e:"內在架構：保密原則、情緒容納、中立與去中心化、移情與反移情覺察。"},
+ {q:"「架構即療效的一部分」，最主要的意涵是？",o:["穩定的設定本身提供安全、容納退行，並讓移情與反移情得以被辨識","架構只是行政規定","架構越僵化越好","架構只對治療師有用"],a:0,e:"架構提供安全感與預測性、容納混亂與退行、界定角色、並成為分析移情與反移情的工具。"},
+ {q:"治療時間常常臨時更改，較可能造成？",o:["個案的焦慮、不安全感與治療依附混亂","更有彈性所以更好","移情消失","收費更合理"],a:0,e:"架構不穩定會造成焦慮與不安全感。"},
+ {q:"向個案解釋收費時，講義的其中一個說明方向是？",o:["這是專業關係，你不需要照顧治療師的情緒或背負人情壓力","因為治療師比較辛苦","收費多寡代表療效","收費是懲罰遲到的方式"],a:0,e:"收費保障關係的純粹與界線，也是對自己的投資與承諾。"}
+]},
+
+/* ---------- 11 ---------- */
+{id:"ch11",n:11,t:"動力取向個案概念化",sub:"怎麼寫案例報告、初評看什麼、心靈的分裂與整合",tag:"常考",min:20,b:[
+ ["h","案例報告是一段故事"],
+ ["ul",["精神動力學案例報告是{{敘事}}（story／narrative），核心是描述**治療師與病人的互動過程**，涵蓋從初次接觸、治療過程到結束治療的全程。","開始階段：病人如何來到治療（自行前來或轉介）、來診原因、希望達成的目標。","醫療相關資料：主訴、病史。**症狀**是促使病人求助的直接原因，病人可能無法理解其意義；分析師若能理解，則可推薦心理治療。","病人的既往經驗：可能看過醫師或其他專業人員，無論有沒有，開始治療時通常伴隨焦慮。"]],
+ ["h","一份案例報告的檢核清單"],
+ ["widget","checklist"],
+ ["h","初診時病人的心理狀態"],
+ ["ul",["**焦慮**：處於未知、無法理解症狀的意義，如同看醫生前對結果與過程的不確定。","**對專業的信任期待**：期待專業人員知道問題並能幫忙，就診前可能會查詢背景、預測對方是否有效。","**缺乏經驗**：對心理治療的理解多來自書籍與影視，缺乏親身經驗使焦慮增加。","**羞恥與污名**：覺得有心理問題很糟、成年人應該能照顧好自己，因此羞愧或擔心被貼標籤。"]],
+ ["h","互動迴圈：治療是雙向的觀察"],
+ ["p","精神分析的解釋發生在互動中：治療師根據病人的信號做出理解，病人也根據治療師的行為與信號（打招呼、結束語）觀察與分析，雙方持續調整，形成{{移情—反移情的互動迴圈}}。"],
+ ["note","case","小宇看錶事件","小宇講到一半突然停頓、眼神飄向窗外；治療師恰好低頭看了一下時鐘。小宇心想「他是不是覺得我很無聊、想趕快結束？」，立刻打住：「沒事啦，反正這也不重要。」治療師感受到氣氛降溫，意識到自己的動作可能被解讀為冷漠，於是核對：「我注意到我低頭看時間之後，你的話就停住了，還說『這不重要』。剛才那一瞬間，你心裡浮現了什麼？」小宇：「我以為你想結束了，覺得我又在碎碎念。」治療師說明：這就是兩人之間的互動，觸動了他「害怕被嫌棄、怕麻煩別人」的按鈕，於是為了保護自己而退縮；如果沒有停下來看清楚，他今天就會帶著「治療師也嫌棄我」的感覺離開，就像他在生活中常常默默退縮。\n**價值**：化解病人的被動與焦慮，讓他明白自己的觀察與感受極具價值，不是躺在手術台上的受試者，而是這段關係的共同參與者。"],
+ ["ul",["移情、反移情的**強度與雙向性**是精神動力取向的特徵，與單純開藥或非動力取向不同。","治療耗時**並非低效率**，而是因為治療需要的元素需要時間累積。","病人的反應＋治療師的反應，構成精神分析的重要**數據**；透過分析數據，決定治療的下一步。","數據來源不僅是病人說的內容，也包括**治療師的內心反應、思考、感受**；而治療師的反應也可能源自自己的潛意識、並不完全被覺察。"]],
+ ["h","心靈是分裂的：治療目標"],
+ ["p","精神分析的核心假設：人類心靈本質上處於{{分裂狀態}}，治療目標是彌合並維持心靈的整合，而各種防衛機制的功能，是幫助心靈維持整合狀態。「心靈是分裂的」幾乎是精神分析與心理動力學的關鍵識別點，我們在很大程度上被無法覺察的部分影響與左右。"],
+ ["table",["意識之外的部分，來源","治療目標"],[["壓抑、否認、拒絕","讓無意識化的部分 → 意識化"],["投射、投射認同","讓未整合的部分 → 整合"],["分裂、解離（「這部分不是我的」）","承受原本無法承受的情感；將無法象徵化的經驗 → 象徵化"]]],
+ ["h4","一、承受原本無法承受的情感"],
+ ["p","早期成長或創傷中，某些情感過於巨大或毀滅（對撫育者的極度憤怒、被拋棄時的絕望、滅頂的羞恥）。幼小的心理結構無法消化，為了避免精神崩潰或失去關係，心靈用壓抑、分裂、解離、投射把它們驅逐到意識之外。治療的核心不是消滅這些情緒，而是擴大個案的{{情感容納空間}}（affect tolerance）：借用治療師的心靈容器，當個案再次碰觸憤怒、悲傷或罪惡感時，治療師維持穩定、不崩潰、不報復、不拋棄，讓個案經驗到「這些情感跑出來，世界並不會毀滅，關係依然穩固」，逐漸從排斥走向共存。"],
+ ["h4","二、從無法象徵化到象徵化"],
+ ["p","（受 Bion 思考理論與心智化影響）{{象徵化}}是把感官與情緒衝擊，轉譯為語言、隱喻、故事、夢境或圖像的能力。無法象徵化的經驗無法被思考，只能以原始形式「活現」：心身症狀（說不出的痛變成胃痛、偏頭痛、窒息感）、行動化（自殘、暴食、攻擊）、解離與空白。治療師透過**阿爾法功能**與同理回饋，幫助個案把混沌的經驗加工成有意義的心靈產物。"],
+ ["note","case","象徵化的前後對照","**過去**：「只要一被忽視，胸口就絞痛、想摔東西發飆。」（未象徵化）\n**現在**：「我發現那種感覺就像是一個被關在黑屋裡快要窒息的小孩，我好渴望被看見，但又害怕被嫌棄。」（透過隱喻與語言象徵化）\n「多象徵化」不是給單一僵化的標籤，而是讓一個經驗擁有多層次的意義表達（夢境、藝術、對話、幽默反思）。難以言喻的痛楚被命名後，就從威脅心靈的異物，變成可被思考、理解、哀悼的心靈材料。"],
+ ["h","為何難以治癒分裂：心靈的邏輯"],
+ ["ul",["阻抗來自防衛；防衛有功能，不會輕易被放下。","探索精神動力的因果比找身體病因更困難，需拋開「是／不是」二元邏輯。在精神分析中，一件事可能**既是又不是**，多種相反的心理狀態可以共存（Freud：潛意識裡沒有「否定詞」與「時間感」）。"]],
+ ["table",["共存的矛盾","說明"],[
+  ["愛與恨（情感矛盾）","嬰兒對同一客體（乳房／母親）既想吞噬佔有，又因挫折而有咬碎破壞的幻想；成人對伴侶的控制慾表面是依戀，底層也共存對自主性喪失的怨恨"],
+  ["全能感與極度自卑","自戀性自體結構：表面唯我獨尊，骨子裡盤踞極度羞恥與一觸即碎的空虛；正因深層自卑，全能自體才必須高高豎起"],
+  ["渴望親密與害怕吞噬","「我討厭你，但我不能沒有你」：靠近時怕被吞噬而推開，拉遠時怕被拋棄而抓回，兩種相反的恐懼在同一心靈空間拉扯"]
+ ]],
+ ["ul",["「你愛不愛這個人？」非愛即恨的答案在精神分析不適用，極端的愛常伴隨深層的毀滅慾與恨意。","「個案想不想好起來？」意識上花錢花時間來諮商，潛意識卻阻抗、遲到、反駁（改變意味著喪失次級獲益或直面未知恐懼）。","洗手強迫症：洗手既是為了乾淨，又不是真的為了衛生，而是洗刷潛意識中的骯髒幻想與罪惡感。","移情中的治療師：既是諮商室裡真實的專業人員，又同時不是他，而是個案投射出的嚴苛母親或缺席父親。"]],
+ ["h","初期治療的態度：理論是地圖"],
+ ["ul",["初期以**收集資訊**為主，避免過早下結論（過早的結論多為緩解自身焦慮）；帶著思考與同理傾聽，與病人共同反思。","心靈理論＝地圖，幫助治療師導航。開車要公路地圖，徒步要標註小路與地形的地圖；通常等進入地形、迷路時，才意識到需要哪一種。","比昂觀察：治療室中有**兩個焦慮的人**（病人與治療師）；「不知道」的狀態會引發治療師的焦慮。","只依賴單一地圖的治療師，遇到意料之外的狀況時較吃力；擁有多份地圖更靈活。"]],
+ ["h","判斷的三要素與初評重點"],
+ ["ul",["**心靈的分裂**：分裂是否由防衛維持；防衛本質是「說不」；分裂維持的原因，是為了解決特定衝突。","**來源於早期生活經驗**：特別是生命早期與依賴成人的關係經驗。","**影響當下**的思考、行為與連結：這些結構在治療與日常生活中都會表現出來。"]],
+ ["table",["初評重點","要看什麼"],[
+  ["自我功能","自我是否夠強壯；是否具良好的幻想功能；還是傾向透過行為發洩情緒、把情緒投射到他人身上"],
+  ["現實檢驗能力","能否清楚區分現實與幻想；是否具象徵化能力，能透過自由聯想、夢等表徵內在世界"],
+  ["防衛機制","每個學派關注的防衛不同；防衛類型（解離、否認、投射…）可提示內在衝突類型與心智結構的成熟度"]
+ ]],
+ ["p","防衛層級的對照見第 3 章：原始防衛（解離、否認、分裂、投射認同）→ 邊緣型或精神病性結構；神經症層次防衛（壓抑、理智化、置換、反向形成）→ 神經症結構。"],
+ ["h","假設與診斷"],
+ ["ul",["假設應是**嘗試性**的，會因新發現而調整；精神分析更重視**過程**而非初始診斷。","治療師內心會形成敘事，但不直接分享給病人。","案例報告要把敘事與**證據**結合：病人的夢、言語或行為、特定互動片段；治療師的想法與感受**也是臨床數據**。"]],
+ ["note","exam","可能怎麼考","動力取向案例報告該包含哪些內容；為何初期要避免過早下結論；互動迴圈的舉例；「心靈是分裂的」的意義；如何評估自我功能與現實檢驗；給防衛描述，推測結構層次；象徵化與情感容納在治療中的功能。"]
+],q:[
+ {q:"依講義，精神動力學案例報告的本質是？",o:["一段敘事，核心是描述治療師與病人的互動過程","只列出診斷與量表分數","只記錄病人所說的話","只描述治療技術"],a:0,e:"案例報告是故事／敘事，涵蓋從初次接觸到結束的全程互動。"},
+ {q:"為何初期治療應避免過早下結論？",o:["過早的結論多為緩解治療師自身的焦慮","因為診斷不重要","因為個案不希望被了解","因為治療師不需要理論"],a:0,e:"初期以收集資訊為主，帶著思考與同理傾聽。"},
+ {q:"精神分析的核心假設之一是？",o:["人類心靈本質上處於分裂狀態","心靈本質上完全統一","意識可以完全掌控行為","潛意識不影響當下"],a:0,e:"心靈是分裂的；治療目標是彌合並維持整合。"},
+ {q:"個案主要使用解離、否認、原始分裂與投射認同等防衛，較提示？",o:["邊緣型或精神病性結構","神經症結構","完全健康","與早期經驗無關"],a:0,e:"原始／低階防衛提示自我與他人界線不清、生存與瓦解的恐懼。"},
+ {q:"小宇看錶事件最能說明什麼？",o:["移情—反移情的互動迴圈，治療師自身的反應也是重要資料","治療師不應該看時間","個案應該更自信","治療師要立刻詮釋童年"],a:0,e:"雙向觀察與調整；治療師把當下互動拿出來與個案一起看。"},
+ {q:"「象徵化」在治療中的意義是？",o:["把混沌的感官與情緒經驗轉譯為語言、隱喻、夢或圖像，使其可被思考","把症狀貼上診斷標籤","叫個案不要再想","讓個案模仿治療師"],a:0,e:"未象徵化的經驗只能以症狀或行動化呈現；象徵化使其可被思考、理解、哀悼。"},
+ {q:"比昂的觀察「治療室中有兩個焦慮的人」，指的是？",o:["病人與治療師","個案與家屬","督導與治療師","本我與超我"],a:0,e:"「不知道」的狀態也會引發治療師的焦慮。"}
+]},
+
+/* ---------- 12 ---------- */
+{id:"ch12",n:12,t:"總複習：閃卡、模擬考、申論題",sub:"把前面 11 章壓縮成可以立刻練習的形式",tag:"",min:30,b:[
+ ["h","全書閃卡"],
+ ["p","點卡片翻面。按「記得了」會從「只看未記得」中移除；進度存在你的瀏覽器。"],
+ ["widget","flash"],
+ ["h","模擬考"],
+ ["p","從全書 60 多題中隨機抽題，選項順序也會打亂。做完會列出錯題與解析，可只重做錯題。"],
+ ["widget","mock"],
+ ["h","申論題答題架構"],
+ ["p","每題都給「先寫什麼、再寫什麼」。建議先自己列大綱，再展開對照。"],
+ ["widget","essays"],
+ ["h","一頁式速記"],
+ ["table",["主題","一句話"],[
+  ["人性觀","決定論：非理性力量、潛意識、前六年本能驅力"],
+  ["人格結構","本我（享樂）、自我（現實）、超我（道德）；總能量固定，此消彼長"],
+  ["焦慮三類","現實＝外界危險；神經質＝本能失控；道德＝良心譴責"],
+  ["防衛兩特性","否認／扭曲現實；潛意識運作"],
+  ["內射／認同／內化","吞下去／學來變成自己／兩者都是內化的形式"],
+  ["伊底帕斯期","從佔有式的愛走向有界線的愛；是概念，不是診斷標籤"],
+  ["Erikson","加入社會，延伸到一生；危機是轉捩點"],
+  ["治療兩大目標","潛意識→意識；強化自我功能"],
+  ["洞察 vs. 修通","懂了 vs. 反覆在關係中重新經驗後才改變"],
+  ["移情","把早期關係腳本帶進治療；只有干擾治療時才處理，且要剛剛好"],
+  ["反移情","Freud：要排除；Klein：病人的潛意識溝通；Winnicott：未被滿足的需求；Bion：容器；Kohut：鏡映"],
+  ["Brenner","防衛是功能：任何心理活動只要對痛苦說「不」，就可能是防衛"],
+  ["性格","早期防衛的結晶；僵化就成了防衛的囚犯"],
+  ["衝突 vs. 缺陷","結構完整但在打架（詮釋）／結構缺了一塊（容納與修復）"],
+  ["治療架構","時間、地點、費用、邊界＋保密、容納、中立、覺察；架構本身就是療效"],
+  ["個案概念化","敘事＋證據；初期不急著下結論；評估自我功能、現實檢驗、防衛層級"]
+ ]]
+]}
+];
+
+/* ================= FLASHCARDS ================= */
+const FLASH=[
+ ["決定論（佛洛伊德人性觀）","行為由非理性力量、潛意識動機，以及前六年關鍵期演變的生物與本能驅力所決定。",1],
+ ["本我／自我／超我的支配原則","本我：享樂原則；自我：現實原則；超我：道德戒律與是非判斷（人格的仲裁者）。",1],
+ ["總能量固定","某一系統掌控的能量愈多，其餘兩系統可用的能量愈少；行為由能量分配的變化決定。",1],
+ ["潛意識的六個來源","夢；說溜嘴與遺忘；催眠後暗示；自由聯想；投射技術；精神症狀的象徵內容。",2],
+ ["現實焦慮","對來自外界危險的恐懼，程度與真實威脅相當。",2],
+ ["神經質焦慮","害怕本能失去控制，導致自己做出會遭懲處的不當行為。",2],
+ ["道德焦慮","害怕受到自己良心的譴責（超我）。",2],
+ ["防衛機轉的兩個普遍特性","(1) 否認與扭曲現實；(2) 在潛意識層面運作。",3],
+ ["壓抑 repression","將具威脅或痛苦的想法感受排除於意識之外；不由自主；許多防衛與精神官能症的根源。",3],
+ ["否認 vs. 壓抑","兩者類似，但否認通常在前意識與意識層面運作。",3],
+ ["投射 vs. 置換","投射：把自己無法接受的衝動歸給別人；置換：把情緒從不可觸犯的對象轉到安全對象。",3],
+ ["反向作用","表現出與威脅性衝動相反的態度與行為（過分慈愛掩飾怨恨）。",3],
+ ["昇華","把性或攻擊能量導向社會可接受甚至讚賞的管道（如體育、創作）。",3],
+ ["內射 vs. 認同 vs. 內化","內射：全盤吞下、缺乏批判；認同：有選擇地吸收並整合；內化：總括性最高階概念，包含兩者。",3],
+ ["口腔期（0–1 歲）的議題","信任自己與他人、害怕情愛與親密、低自尊。",4],
+ ["肛門期（1–3 歲）的議題","接受與表達敵意憤怒；自主感與自有力量。",4],
+ ["性蕾期（性器期）","約 3–6 歲；性別角色勝任感、接納性慾；伊底帕斯期所在階段。",4],
+ ["伊底帕斯期的核心任務","愛與依附、競爭與嫉妒、界線與規範、認同與角色；學會愛不是佔有。",4],
+ ["伊底帕斯期的提醒","是精神分析的概念，不是診斷標籤；不能憑單一特徵貼標籤。",4],
+ ["Erikson 的補充","性心理與心理社會同時發生；加入社會環境，並把發展延伸到一生；危機是轉捩點。",5],
+ ["Erikson 前五個危機","信任vs不信任；自主vs羞愧懷疑；創造進取vs罪惡感；勤勉vs自卑；自我認同vs角色混淆。",5],
+ ["Erikson 後三個危機","親密vs孤立；生產vs停滯；統整vs破滅。",5],
+ ["古典精神分析的兩大目標","將潛意識化為意識；強化自我功能（更依據現實，少受衝動或非理性罪惡感驅動）。",6],
+ ["空白螢幕","古典分析師以匿名身分進行治療的取向。",6],
+ ["自由聯想","精神分析的基本規則；躺椅鼓勵不自我監控的深度回想。",6],
+ ["洞察 vs. 修通","洞察是理解；修通是反覆理解、經驗、處理，使僵化模式產生穩定改變。有了洞察不代表問題解決。",6],
+ ["六大基本技術","維持分析架構、自由聯想、詮釋、夢的解析、抗拒的分析、移情的分析。",6],
+ ["移情（第 2 份講義）","早期對世界的理論建構，源自嬰兒與照顧者的互動，內化為「我該怎麼對待他人、他人怎麼對待我」。",7],
+ ["移情成為問題的三特徵","固著、阻礙關係發展、病人感覺卡住。",7],
+ ["處理移情的兩原則","只有干擾治療時才處理；處理要剛剛好（太早→防衛，太晚→卡關）。",7],
+ ["反移情：Freud vs. Klein","Freud：治療師的問題、需排除、中立抽離；Klein 學派：病人潛意識溝通、需理解回應、進入關係。",7],
+ ["投射認同","個案把無法承受的內在部分投射到治療師身上，並施壓迫使治療師演出該形象。",7],
+ ["Winnicott 的反移情觀","反映病人未被滿足的需求；治療師提供夠好的客體與抱持性環境。",7],
+ ["Bion 與 Kohut 的功能","Bion：治療師如容器；Kohut：鏡映與被理想化。",7],
+ ["Brenner 的防衛觀","防衛是一種功能：任何心理活動只要具有對痛苦「說不」的作用，就是防衛。",8],
+ ["性格與防衛","性格是早期防衛的結晶；僵化後成為外骨骼，人成為自己防衛的囚犯。",8],
+ ["妥協形成","本能欲望、防衛與禁忌、現實要求之間的折衷結果，可化為症狀、夢、習慣、選擇或關係模式。",8],
+ ["躁狂性防衛","對失落與悔恨（哀悼歷程）的否認，以過度快樂、誇張行動、全能感掩蓋痛苦；Klein。",8],
+ ["虛假自體／垂直分裂／好似人格","Winnicott：為生存掩蓋真實自體；Kohut：人格中並存高度自律與極端放縱；好似人格：扮演角色卻內在空洞。",8],
+ ["衝突模式","結構完整，症狀是內在衝突與防衛的妥協；神經症層次；技術：中立、節制、詮釋；目標：意識化與頓悟。",9],
+ ["缺陷模式","結構發展停滯或未成形；自戀、邊緣、早期創傷；技術：同理沉浸、容納、修正性情感經驗；修復關係破裂。",9],
+ ["外在架構","治療時間、地點、費用、邊界。",10],
+ ["內在架構","保密原則、情緒容納、中立與去中心化、移情與反移情覺察。",10],
+ ["為何收費（講義三點）","你不需要照顧我的情緒；保障關係純粹與界線；是對自己的投資與承諾。",10],
+ ["案例報告的本質","一段敘事，描述治療師與病人的互動過程；治療師的想法與感受也是臨床數據。",11],
+ ["初期評估重點","自我功能、現實檢驗能力、防衛機制。",11],
+ ["原始防衛 vs. 神經症層次防衛","原始：解離、否認、分裂、投射認同→邊緣／精神病性；神經症層次：壓抑、理智化、置換、反向形成→神經症結構。",11],
+ ["象徵化","把混沌的感官與情緒經驗轉譯為語言、隱喻、夢、圖像的能力；未象徵化的經驗會以心身症狀或行動化呈現。",11],
+ ["情感容納（承受無法承受的情感）","治療師穩定不崩潰、不報復、不拋棄，讓個案經驗到情感出現時關係依然穩固，逐漸與情感共存。",11]
+].map((x,i)=>({id:i,f:x[0],b:x[1],ch:x[2]}));
+
+/* ================= ESSAYS ================= */
+const ESSAYS=[
+ {q:"比較佛洛伊德、克萊因學派與獨立學派對反移情的看法，並說明反移情在臨床上的用途。",o:["定義：反移情＝治療師對病人的情感反應（含無意識）","Freud：早期視為需清除的「污染」（無菌操作），治療師要中立、抽離","Klein：病人潛意識溝通的內容；投射認同使治療師成為「接收器」，需理解與回應","獨立學派（Winnicott）：反映病人未被滿足的發展需求；提供抱持性環境。補充 Bion 容器、Kohut 鏡映","臨床運用：舉例（如「你是不是覺得我很麻煩」個案）→ 覺察→形成假設→不行動化；需督導","結語：現代多視為有價值的臨床資料，前提是覺察與督導"]},
+ {q:"說明防衛機轉的功能與局限，並解釋為何說「性格是早期防衛的結晶」。",o:["定義與兩特性：否認扭曲現實、潛意識運作","功能：自我面對衝突時的妥協手段（外交家）；成功→穩定，失敗→症狀","Brenner：防衛是功能，正向行為也可能是防衛（工作狂、智性化）","局限：僵化、失去彈性，成為外骨骼→囚犯","例：過度獨立的強人或好好先生，寫出童年情境→防衛形成→外骨骼硬化→困境","治療態度：不評價好壞，看它解決哪個衝突；「應對方式已過時」"]},
+ {q:"比較衝突模式與缺陷模式在病理觀、代表族群與介入焦點上的差異。",o:["衝突模式：結構完整；本能 vs. 禁制；妥協形成；神經症；中立、節制、詮釋；意識化與頓悟","缺陷模式：結構未成形；早期環境失敗；防衛即求生；自戀／邊緣／早期創傷；同理沉浸、容納、修正性情感經驗；修復破裂","兩者不是輕重之分，也不互斥","舉例個案並判斷偏向；現代臨床常整合"]},
+ {q:"為什麼說「治療架構不是附屬品，而是治療本身的一部分」？請說明外在與內在架構及其被破壞的後果。",o:["定義：容器；可以發生變化的空間","外在：時間、地點、費用、邊界；內在：保密、情緒容納、中立、移情反移情覺察","四大功能：安全與預測性；容納混亂與退行；界定角色；分析移情反移情的工具","破壞後果：時間不固定→不安全；收費不明→價值與責任困惑；私交→倫理與混淆移情；無法處理投射→治療受限","現代趨勢：更有彈性與協商，但堅守邊界；舉「收費說明」為實務例"]},
+ {q:"說明移情的本質、何時成為問題，以及治療中處理移情的原則。",o:["定義：過去對重要他人的情感與幻想轉到治療師身上；也是早期對世界的理論建構","不是病，是模式；例：常被責罵者預期他人有敵意","成為問題：固著、阻礙關係發展、病人感覺卡住（阿傑例）","原則：不是所有都要處理，只在干擾治療時；處理要剛剛好","與修通、反移情連結，以及移情如何在治療關係中被重新經驗"]},
+ {q:"比較 Freud 與 Erikson 的發展理論，並選一個階段說明兩者如何互補。",o:["Freud：內在本能×性心理衝突×童年；前三期（前六年）奠定人格","Erikson：性心理與心理社會同時；加入社會環境；延伸一生；危機＝轉捩點","對照：口腔↔信任；肛門↔自主；性蕾↔創造進取；潛伏↔勤勉；兩性↔自我認同；成年三期為 Erikson 新增","互補舉例：3–6 歲伊底帕斯期＝Freud 的三角關係衝突＋Erikson 的進取與罪惡感"]},
+ {q:"動力取向個案概念化的初期評估要注意什麼？請以「心靈是分裂的」說明治療目標。",o:["態度：初期收集資訊，避免過早下結論；假設是嘗試性的","三要素：分裂由防衛維持（說不）；來自早期經驗；影響當下","初評：自我功能、現實檢驗、防衛機制與其層級（原始 vs. 神經症）","分裂的來源：壓抑、否認、投射、分裂、解離","目標：無意識→意識；未整合→整合；承受無法承受的情感；未象徵→象徵","數據：病人的資料＋治療師自己的反應；敘事＋證據"]}
+];
+
+/* ================= ENGINE ================= */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const KEY="psy-ebook-v1";
+let S={read:{},notes:{},cards:{},best:{},fs:17,recite:false,theme:""};
+try{const o=JSON.parse(localStorage.getItem(KEY));if(o&&typeof o==="object")S=Object.assign(S,o)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const inl=s=>String(s)
+  .replace(/\{\{(.+?)\}\}/g,'<span class="cz" tabindex="0" role="button">$1</span>')
+  .replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
+  .replace(/\n/g,"<br>");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const byN=n=>CH.find(c=>c.n===n);
+const idxOf=id=>CH.findIndex(c=>c.id===id);
+
+/* ---------- block renderer ---------- */
+let uid=0;
+function block(b){
+  const t=b[0];
+  if(t==="h")return `<h3>${inl(b[1])}</h3>`;
+  if(t==="h4")return `<h4>${inl(b[1])}</h4>`;
+  if(t==="p")return `<p>${inl(b[1])}</p>`;
+  if(t==="ul")return `<ul>${b[1].map(x=>`<li>${inl(x)}</li>`).join("")}</ul>`;
+  if(t==="ol")return `<ol>${b[1].map(x=>`<li>${inl(x)}</li>`).join("")}</ol>`;
+  if(t==="note"){
+    const k=b[1],ti=b[2],body=b[3];
+    const title=ti&&ti!==NL[k]?`${NL[k]}：${inl(ti)}`:NL[k];
+    return `<aside class="note ${k}"><div class="nt">${title}</div><p>${inl(body)}</p></aside>`;
+  }
+  if(t==="table"){
+    const head=b[1].map(x=>`<th>${inl(x)}</th>`).join("");
+    const rows=b[2].map(r=>`<tr>${r.map(x=>`<td>${inl(x)}</td>`).join("")}</tr>`).join("");
+    return `<div class="tw"><table><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+  if(t==="tabs"){
+    const id="tb"+(uid++);
+    const bar=b[1].map((x,i)=>`<button role="tab" aria-selected="${i===0}" data-t="${id}" data-i="${i}">${x.t}</button>`).join("");
+    const panels=b[1].map((x,i)=>`<div class="tabpanel" role="tabpanel" data-p="${id}" data-i="${i}" ${i?"hidden":""}>${x.c.map(block).join("")}</div>`).join("");
+    return `<div class="tabs"><div class="tabbar" role="tablist">${bar}</div>${panels}</div>`;
+  }
+  if(t==="widget")return `<div class="widget" data-w="${b[1]}"></div>`;
+  return "";
+}
+
+/* ---------- quiz engine ---------- */
+function quiz(box,qs,opt={}){
+  let order=qs.map((_,i)=>i);
+  if(opt.shuffle)order=shuffle(order);
+  let i=0,score=0,wrong=[];
+  const step=()=>{
+    if(i>=order.length)return end();
+    const q=qs[order[i]];
+    const idx=shuffle(q.o.map((_,k)=>k));
+    box.innerHTML=`<div class="qhead">第 ${i+1} / ${order.length} 題${q.ch?`（第 ${q.ch} 章）`:""}</div><p class="qtext">${inl(q.q)}</p><div class="opts">${idx.map(k=>`<button class="opt" data-k="${k}">${inl(q.o[k])}</button>`).join("")}</div><div class="fb" hidden></div>`;
+    $$(".opt",box).forEach(bn=>bn.onclick=()=>{
+      const k=+bn.dataset.k,ok=k===q.a;
+      $$(".opt",box).forEach(x=>{x.disabled=true;if(+x.dataset.k===q.a)x.classList.add("ok")});
+      if(ok)score++;else{bn.classList.add("no");wrong.push(order[i])}
+      const fb=$(".fb",box);fb.hidden=false;
+      fb.innerHTML=`<strong class="${ok?"g":"r"}">${ok?"答對了":"答錯了"}</strong>　${inl(q.e)}<div class="row"><button class="btn nx">${i+1>=order.length?"看結果":"下一題"}</button></div>`;
+      const nx=$(".nx",box);nx.onclick=()=>{i++;step()};nx.focus();
+    });
+  };
+  const end=()=>{
+    const n=order.length,pct=Math.round(score/n*100);
+    if(opt.key){const b=S.best[opt.key];if(!b||score/n>b.s/b.n){S.best[opt.key]={s:score,n};save();if(opt.onBest)opt.onBest()}}
+    const msg=pct>=90?"很穩，可以往下一章前進。":pct>=70?"不錯。看看下面的錯題，回頭對照本章的「易混淆」。":"建議先重讀本章的重點提醒與易混淆，再測一次。";
+    box.innerHTML=`<div class="score">${score} / ${n}</div><p>${msg}</p>${wrong.map(j=>{const q=qs[j];return `<div class="wrong"><b>${inl(q.q)}</b><br>正解：${inl(q.o[q.a])}<br>${inl(q.e)}</div>`}).join("")}<div class="row">${wrong.length?'<button class="btn retryw">只重做錯題</button>':""}<button class="btn ghost again">全部再做一次</button></div>`;
+    const rw=$(".retryw",box);if(rw)rw.onclick=()=>quiz(box,wrong.map(j=>qs[j]),Object.assign({},opt,{key:null}));
+    $(".again",box).onclick=()=>quiz(box,qs,opt);
+  };
+  step();
+}
+
+/* ---------- widgets ---------- */
+const W={};
+const STAGES=[
+  ["口腔期","約 0–1 歲","要處理的是：無法信任自己與他人、害怕情愛與建立親密關係，以及低自尊問題。"],
+  ["肛門期","約 1–3 歲","要處理的是：無法接受與表達自己感覺到的敵意、憤怒、狂暴及怨恨等情緒，否定自己作為一個人的自有力量，缺乏自主感。"],
+  ["性蕾期（性器期）","約 3–6 歲（講義前段寫 3–5 歲）","要處理的是：無法充分接納自己的性慾、性感受，對身為男性或女性的勝任感出了問題，以及害怕性事。伊底帕斯期發生在這個階段（下一節）。"],
+  ["潛伏期","約 5–6 歲到青春期","性驅力在此階段被壓抑下來，性能量轉向社會所關注的層面：同儕、師長……"],
+  ["兩性期","青少年","潛伏期所壓抑的性衝動在此時期再度出現，導致青春期的心理改變。"]
+];
+W.stages=el=>{
+  let cur=0;
+  const draw=()=>{
+    el.innerHTML=`<h4>Freud 的心理性發展五階段（點選階段）</h4><div>${STAGES.map((s,i)=>`<button class="pill" aria-pressed="${i===cur}" data-i="${i}">${s[0]}</button>`).join("")}</div><div class="verdict" style="margin-top:10px"><b>${STAGES[cur][0]}</b>　<span class="wnote">${STAGES[cur][1]}</span><br>${STAGES[cur][2]}</div><p class="wnote">前三期（口腔、肛門、性蕾）若無法順利完成，常導致日後接受心理諮商時要處理的困擾。</p>`;
+  };
+  el.onclick=e=>{const b=e.target.closest("[data-i]");if(b){cur=+b.dataset.i;draw()}};
+  draw();
+};
+
+W.depth=el=>{
+  el.className="depth";
+  const Z=[["水面上：看得見的治療","可以直接觀察、討論與練習的做法。",[6,10,11]],["水面下：焦慮與防衛","看不見，但每天都在運作的機制。",[1,2,3,8]],["深處：早期經驗與關係模式","塑造一個人怎麼愛、怕、防衛的源頭。",[4,5,7,9]]];
+  el.innerHTML=Z.map(z=>`<div class="zone"><h4>${z[0]}</h4><p>${z[1]}</p><div class="chips">${z[2].map(n=>`<button class="chip" data-n="${n}">${n}. ${byN(n).t}</button>`).join("")}</div></div>`).join("");
+  el.onclick=e=>{const b=e.target.closest(".chip");if(b)goN(+b.dataset.n)};
+};
+
+W.trend=el=>{
+  const types=["全部",...new Set(TOPICS.flatMap(t=>t.ty))];
+  let f="全部";
+  const draw=()=>{
+    const list=TOPICS.filter(t=>f==="全部"||t.ty.includes(f)).sort((a,b)=>b.s-a.s);
+    el.innerHTML=`<h4>各主題的複習優先度（依講義強調程度推估）</h4><p class="wnote">5 分＝最優先。點題型可篩選。</p><div>${types.map(x=>`<button class="pill" aria-pressed="${x===f}" data-f="${x}">${x}</button>`).join("")}</div>`+
+    list.map(t=>`<div class="trow"><div class="thead"><b>${t.t}</b><span class="tscore">優先度 ${t.s} / 5</span></div><div class="tbar"><i class="s${t.s}" style="width:${t.s*20}%"></i></div><div class="ttypes">常見題型：${t.ty.join("、")}</div><p class="twhy">${t.w}</p><button class="linkbtn" data-n="${t.ch}">前往第 ${t.ch} 章</button></div>`).join("");
+  };
+  el.onclick=e=>{
+    const p=e.target.closest("[data-f]");if(p){f=p.dataset.f;draw();return}
+    const l=e.target.closest("[data-n]");if(l)goN(+l.dataset.n);
+  };
+  draw();
+};
+
+W.energy=el=>{
+  const v={id:33,ego:34,sup:33};
+  el.innerHTML=`<h4>心理能量分配（三者總和固定為 100）</h4>
+  <div class="sl"><label for="e_id" style="color:var(--plum);font-weight:700">本我</label><input id="e_id" type="range" min="0" max="100" data-k="id"><output></output></div>
+  <div class="sl"><label for="e_ego" style="color:var(--teal);font-weight:700">自我</label><input id="e_ego" type="range" min="0" max="100" data-k="ego"><output></output></div>
+  <div class="sl"><label for="e_sup" style="color:var(--pri);font-weight:700">超我</label><input id="e_sup" type="range" min="0" max="100" data-k="sup"><output></output></div>
+  <div class="stack" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+  <div class="verdict" aria-live="polite"></div>
+  <div class="row"><button class="pill" data-p="33,34,33">均衡</button><button class="pill" data-p="60,25,15">本我偏強</button><button class="pill" data-p="15,25,60">超我偏強</button><button class="pill" data-p="20,60,20">自我強</button></div>
+  <p class="wnote">這是教學示意，用來體會「此消彼長」，不是診斷工具。</p>`;
+  const sync=()=>{
+    ["id","ego","sup"].forEach(k=>{const r=$(`[data-k="${k}"]`,el);r.value=v[k];r.nextElementSibling.textContent=v[k]});
+    $(".stack .a",el).style.width=v.id+"%";$(".stack .b",el).style.width=v.ego+"%";$(".stack .c",el).style.width=v.sup+"%";
+    let m;
+    if(v.ego>=42&&v.id<=38&&v.sup<=38)m="自我居中且夠強：能統籌本我衝動、超我要求與現實，較接近健康運作。";
+    else if(v.id>=45)m="本我偏強：容易被衝動與立即滿足帶著走，現實與良心較難發揮約束。";
+    else if(v.sup>=45)m="超我偏強：容易嚴苛自責、罪惡感重，較容易出現道德焦慮。";
+    else if(v.ego<=20)m="自我偏弱：無法有效調和兩邊，容易在衝動與自責之間擺盪。";
+    else m="介於中間：自我尚可協調，可以留意哪一端的拉力比較大。";
+    $(".verdict",el).textContent=m;
+  };
+  const set=(k,val)=>{
+    val=Math.max(0,Math.min(100,Math.round(val)));
+    const ks=["id","ego","sup"].filter(x=>x!==k),rem=100-val,s=v[ks[0]]+v[ks[1]];
+    if(s===0){v[ks[0]]=Math.round(rem/2)}else{v[ks[0]]=Math.round(rem*v[ks[0]]/s)}
+    v[ks[1]]=rem-v[ks[0]];v[k]=val;sync();
+  };
+  el.oninput=e=>{const r=e.target.closest("input[data-k]");if(r)set(r.dataset.k,+r.value)};
+  el.onclick=e=>{const p=e.target.closest("[data-p]");if(p){const a=p.dataset.p.split(",").map(Number);v.id=a[0];v.ego=a[1];v.sup=a[2];sync()}};
+  sync();
+};
+
+W.defcards=el=>{
+  el.className="grid";
+  el.innerHTML=DEF.map(d=>`<button class="flip" aria-pressed="false"><div class="fr">${d.n}</div><div class="en">${d.e}</div><div class="bk"><b>${d.n}</b><br>${d.d}<br><br>${d.x}</div><span class="hint">點擊翻面</span></button>`).join("");
+  el.onclick=e=>{const c=e.target.closest(".flip");if(c){const on=c.classList.toggle("on");c.setAttribute("aria-pressed",on)}};
+};
+
+W.drill=el=>{
+  const names=DEF.map(d=>d.n);
+  let order=shuffle(DRILL.map((_,i)=>i)),i=0,score=0;
+  const step=()=>{
+    if(i>=order.length){
+      el.innerHTML=`<h4>練習完成</h4><div class="score">${score} / ${order.length}</div><p>錯的那幾題，回頭看上方「最容易混的幾組」。</p><div class="row"><button class="btn again">再練一次</button></div>`;
+      $(".again",el).onclick=()=>{order=shuffle(order);i=0;score=0;step()};return;
+    }
+    const [sc,ans]=DRILL[order[i]];
+    const opts=shuffle([ans,...shuffle(names.filter(n=>n!==ans)).slice(0,4)]);
+    el.innerHTML=`<h4>防衛機轉辨識　${i+1} / ${order.length}</h4><p class="qtext">${sc}</p><div class="opts">${opts.map(o=>`<button class="opt" data-o="${o}">${o}</button>`).join("")}</div><div class="fb" hidden></div>`;
+    $$(".opt",el).forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.o===ans;
+      $$(".opt",el).forEach(x=>{x.disabled=true;if(x.dataset.o===ans)x.classList.add("ok")});
+      if(ok)score++;else b.classList.add("no");
+      const d=DEF.find(x=>x.n===ans),fb=$(".fb",el);fb.hidden=false;
+      fb.innerHTML=`<strong class="${ok?"g":"r"}">${ok?"答對了":"答錯了，正解是："+ans}</strong>　${d.d}<div class="row"><button class="btn nx">${i+1>=order.length?"看結果":"下一題"}</button></div>`;
+      $(".nx",el).onclick=()=>{i++;step()};$(".nx",el).focus();
+    });
+  };
+  step();
+};
+
+W.erik=el=>{
+  let cur=0;
+  const draw=()=>{
+    const e=ERIK[cur];
+    el.innerHTML=`<h4>點選一個階段</h4><div class="tw" style="margin:.4em 0"><table><thead><tr><th>Erikson 階段</th><th>心理社會危機</th></tr></thead><tbody>${ERIK.map((x,i)=>`<tr data-i="${i}" style="cursor:pointer" class="${i===cur?"det-on":""}"><td><button class="linkbtn" style="text-decoration:none;font-weight:700;text-align:left">${x.a}</button></td><td>${x.c}</td></tr>`).join("")}</tbody></table></div><div class="verdict"><b>${e.a}：${e.c}</b><br>對應 Freud：${e.f}<br>${e.n}</div><p class="wnote">年齡帶為一般教科書常見寫法，講義未標示。</p>`;
+  };
+  el.onclick=e=>{const r=e.target.closest("tr[data-i]");if(r){cur=+r.dataset.i;draw()}};
+  draw();
+};
+
+W.xiaolin=el=>{
+  el.innerHTML=XIAO.map((x,i)=>`<div><button class="opt" style="width:100%;margin-top:8px" data-i="${i}" aria-expanded="false">${x[0]}</button><div class="fb" hidden></div></div>`).join("")+`<p class="wnote">點每一句，看它動用了哪一種防衛。</p>`;
+  el.onclick=e=>{
+    const b=e.target.closest("button[data-i]");if(!b)return;
+    const fb=b.nextElementSibling,open=fb.hidden;
+    fb.hidden=!open;b.setAttribute("aria-expanded",open);
+    if(open){const x=XIAO[+b.dataset.i];fb.innerHTML=`<b>${x[1]}</b>　${x[2]}`}
+  };
+};
+
+W.checklist=el=>{
+  el.innerHTML=`<h4>案例報告要交代的內容（打勾自我檢查）</h4><div class="chk">${CHECK.map((c,i)=>`<label><input type="checkbox" data-i="${i}"><span>${c}</span></label>`).join("")}</div><p class="wnote" id="cc">已完成 0 / ${CHECK.length}（此清單整理自講義的案例報告與初評內容，不會儲存）</p>`;
+  el.onchange=()=>{$("#cc",el).textContent=`已完成 ${$$("input:checked",el).length} / ${CHECK.length}（此清單整理自講義的案例報告與初評內容，不會儲存）`};
+};
+
+W.flash=el=>{
+  let ch="all",only=false,pool=[],i=0,flip=false;
+  const build=()=>{pool=FLASH.filter(c=>(ch==="all"||c.ch===+ch)&&(!only||S.cards[c.id]!=="know"));if(i>=pool.length)i=0;flip=false};
+  const draw=()=>{
+    const known=FLASH.filter(c=>S.cards[c.id]==="know").length;
+    const c=pool[i];
+    el.innerHTML=`<div class="row" style="margin:0 0 10px"><label for="fch">範圍</label><select id="fch"><option value="all">全部章節</option>${Array.from({length:11},(_,k)=>`<option value="${k+1}" ${ch!=="all"&&+ch===k+1?"selected":""}>第 ${k+1} 章</option>`).join("")}</select><button class="pill" id="fonly" aria-pressed="${only}">只看未記得</button><button class="pill" id="fshuf">洗牌</button><span class="wnote" style="margin:0">已記得 ${known} / ${FLASH.length}</span></div>`+
+    (c?`<button class="fc ${flip?"on":""}" id="fcard" aria-live="polite">${inl(flip?c.b:c.f)}<small>${i+1} / ${pool.length}　第 ${c.ch} 章　點擊翻面</small></button><div class="row"><button class="btn ghost" id="fprev">上一張</button><button class="btn ghost" id="fagain">再練習</button><button class="btn" id="fknow">記得了</button><button class="btn ghost" id="fnext">下一張</button></div>`:`<p>這個範圍沒有卡片了，做得很好。可以取消「只看未記得」重新複習。</p>`);
+  };
+  const next=()=>{i=pool.length?(i+1)%pool.length:0;flip=false};
+  el.onchange=e=>{if(e.target.id==="fch"){ch=e.target.value;i=0;build();draw()}};
+  el.onclick=e=>{
+    const id=e.target.id;
+    if(id==="fonly"){only=!only;i=0;build();draw()}
+    else if(id==="fshuf"){pool=shuffle(pool);i=0;flip=false;draw()}
+    else if(id==="fcard"){flip=!flip;draw();$("#fcard",el).focus()}
+    else if(id==="fprev"){i=(i-1+pool.length)%pool.length;flip=false;draw()}
+    else if(id==="fnext"){next();draw()}
+    else if(id==="fagain"){S.cards[pool[i].id]="again";save();next();draw()}
+    else if(id==="fknow"){S.cards[pool[i].id]="know";save();if(only){build()}else next();draw()}
+  };
+  build();draw();
+};
+
+W.mock=el=>{
+  const all=CH.flatMap(c=>(c.q||[]).map(q=>Object.assign({ch:c.n},q)));
+  el.innerHTML=`<h4>全書模擬考（共 ${all.length} 題題庫）</h4><div class="row" style="margin:0"><label for="mn">題數</label><select id="mn"><option value="10">10 題</option><option value="20" selected>20 題</option><option value="${all.length}">全部 ${all.length} 題</option></select><button class="btn" id="mgo">開始</button></div><div id="mbox" style="margin-top:14px"></div>`;
+  $("#mgo",el).onclick=()=>{const n=+$("#mn",el).value;quiz($("#mbox",el),shuffle(all).slice(0,n),{shuffle:true})};
+};
+
+W.essays=el=>{
+  el.className="";
+  el.innerHTML=ESSAYS.map((e,i)=>`<details><summary>${i+1}. ${e.q}</summary><div><p class="wnote">答題架構（可依題目取捨）：</p><ol>${e.o.map(x=>`<li>${inl(x)}</li>`).join("")}</ol></div></details>`).join("");
+};
+
+/* ---------- app shell ---------- */
+let cur=0;
+const page=$("#page"),rail=$("#rail"),scrim=$("#scrim");
+const goN=n=>go(CH.indexOf(byN(n)));
+function go(i){
+  const id=CH[i].id;
+  if(location.hash==="#"+id)render(i);else location.hash="#"+id;
+}
+function drawToc(){
+  $("#toc").innerHTML=CH.map((c,i)=>`<li><button data-i="${i}" ${i===cur?'aria-current="page"':""}><span class="no">${c.n||(i===0?"序":"終")}</span><span>${c.t}</span><span>${S.read[c.id]?'<span class="done" title="已讀">✓</span>':(c.tag?`<span class="tagdot tag-${c.tag}">${c.tag}</span>`:"")}</span></button></li>`).join("");
+  const n=CH.filter(c=>S.read[c.id]).length;
+  $("#ovTxt").textContent=`${n} / ${CH.length}`;
+  $("#ovBar").style.width=(n/CH.length*100)+"%";
+}
+function render(i){
+  cur=i;const c=CH[i];
+  const best=S.best[c.id];
+  const glyph=c.n||(i===0?"序":"終");
+  page.innerHTML=`<div class="recite-hint">背誦模式已開啟：有底線標示的重點詞被遮住了，點一下即可顯示。</div>
+  <div class="chead"><div class="cnum" aria-hidden="true">${glyph}</div><div><h1>${c.n?`第 ${c.n} 章　`:""}${c.t}</h1><p class="csub">${c.sub}</p></div></div>
+  <div class="cmeta">${c.tag?`<span class="tagdot tag-${c.tag}">考試重要度：${c.tag}</span>`:""}<span>約 ${c.min} 分鐘</span>${best?`<span id="bestTxt">本章小測最佳：${best.s} / ${best.n}</span>`:'<span id="bestTxt"></span>'}</div>
+  <div class="content">${c.b.map(block).join("")}</div>
+  ${c.q?`<section class="quiz"><h3>本章小測驗（${c.q.length} 題）</h3><div id="quizBox"></div></section>`:""}
+  <section class="notebox"><h3>我的筆記</h3><textarea id="note" aria-label="我的筆記" placeholder="寫下自己的例子、疑問，或老師在課堂上補充的重點（只存在這個瀏覽器）"></textarea></section>
+  <div class="row" style="margin-top:18px"><button class="btn ${S.read[c.id]?"ghost":""}" id="readBtn">${S.read[c.id]?"已讀完（點一下取消）":"標記為已讀"}</button></div>
+  <div class="pn">${i>0?`<button class="btn ghost" data-go="${i-1}">上一章：${CH[i-1].t}</button>`:"<span></span>"}${i<CH.length-1?`<button class="btn" data-go="${i+1}">下一章：${CH[i+1].t}</button>`:""}</div>
+  <p class="foot">整理自黃傳永教授《精神（心理）分析治療 2026》兩份講義。標示「補充」的內容是整理時另加，不是講義原文；考試範圍與題型請以課堂公告與指定教材為準。</p>`;
+  $$(".widget",page).forEach(el=>{const f=W[el.dataset.w];if(f)f(el)});
+  if(c.q){quiz($("#quizBox"),c.q,{key:c.id,shuffle:true,onBest:()=>{const b=S.best[c.id],t=$("#bestTxt");if(t)t.textContent=`本章小測最佳：${b.s} / ${b.n}`}})}
+  const nt=$("#note");nt.value=S.notes[c.id]||"";nt.oninput=()=>{S.notes[c.id]=nt.value;save()};
+  $("#readBtn").onclick=()=>{S.read[c.id]=!S.read[c.id];save();render(cur);drawToc()};
+  drawToc();
+  document.title=(c.n?`第${c.n}章 `:"")+c.t+" · 精神分析治療電子書";
+  window.scrollTo(0,0);page.focus({preventScroll:true});
+  closeRail();
+}
+function openRail(){rail.classList.add("open");scrim.classList.add("show")}
+function closeRail(){rail.classList.remove("open");scrim.classList.remove("show")}
+
+/* ---------- global events ---------- */
+page.addEventListener("click",e=>{
+  const cz=e.target.closest(".cz");if(cz){cz.classList.toggle("on");return}
+  const g=e.target.closest("[data-go]");if(g){go(+g.dataset.go);return}
+  const tb=e.target.closest('.tabbar button[role="tab"]');
+  if(tb){
+    const id=tb.dataset.t,i=tb.dataset.i;
+    $$(`[data-t="${id}"]`,page).forEach(b=>b.setAttribute("aria-selected",b.dataset.i===i));
+    $$(`[data-p="${id}"]`,page).forEach(p=>{p.hidden=p.dataset.i!==i});
+  }
+});
+page.addEventListener("keydown",e=>{
+  if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("cz")){e.preventDefault();e.target.classList.toggle("on")}
+});
+$("#toc").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(b)go(+b.dataset.i)});
+$("#menuBtn").onclick=openRail;scrim.onclick=closeRail;
+window.addEventListener("hashchange",()=>{const i=idxOf(location.hash.slice(1));render(i<0?0:i)});
+
+const root=document.documentElement;
+const applyFs=()=>root.style.setProperty("--fs",S.fs+"px");
+$("#fsUp").onclick=()=>{S.fs=Math.min(22,S.fs+1);applyFs();save()};
+$("#fsDown").onclick=()=>{S.fs=Math.max(14,S.fs-1);applyFs();save()};
+const isDark=()=>root.dataset.theme?root.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+const applyTheme=()=>{if(S.theme)root.dataset.theme=S.theme;$("#theme").textContent=isDark()?"淺色":"深色"};
+$("#theme").onclick=()=>{S.theme=isDark()?"light":"dark";root.dataset.theme=S.theme;applyTheme();save()};
+const applyRecite=()=>{document.body.classList.toggle("recite",!!S.recite);$("#recite").setAttribute("aria-pressed",!!S.recite);$$(".cz.on").forEach(x=>x.classList.remove("on"))};
+$("#recite").onclick=()=>{S.recite=!S.recite;applyRecite();save()};
+
+/* ---------- search ---------- */
+const flat=x=>Array.isArray(x)?x.map(flat).join(" "):(x&&typeof x==="object")?Object.values(x).map(flat).join(" "):String(x);
+const INDEX=CH.map((c,i)=>({i,t:c.t,text:flat([c.sub,c.b]).replace(/\{\{|\}\}|\*\*/g,"").replace(/\s+/g," ")}));
+const qi=$("#q"),res=$("#results");
+qi.addEventListener("input",()=>{
+  const q=qi.value.trim();
+  if(q.length<2&&!/[\u4e00-\u9fff]/.test(q)){res.hidden=true;return}
+  const ql=q.toLowerCase(),hits=[];
+  INDEX.forEach(x=>{
+    const p=x.text.toLowerCase().indexOf(ql);
+    if(p>=0||x.t.toLowerCase().includes(ql)){
+      const s=Math.max(0,p-22),snip=p>=0?x.text.slice(s,p+q.length+38):x.text.slice(0,50);
+      hits.push({i:x.i,t:x.t,snip:esc(snip).replace(new RegExp(esc(q).replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi"),m=>`<b>${m}</b>`)});
+    }
+  });
+  res.hidden=false;
+  res.innerHTML=hits.length?hits.slice(0,8).map(h=>`<button data-i="${h.i}"><strong>${CH[h.i].n?`第 ${CH[h.i].n} 章　`:""}${h.t}</strong><br>…${h.snip}…</button>`).join(""):`<div class="empty">找不到「${esc(q)}」。可以換一個關鍵字試試。</div>`;
+});
+res.addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(b){res.hidden=true;qi.value="";go(+b.dataset.i)}});
+document.addEventListener("click",e=>{if(!e.target.closest(".search"))res.hidden=true});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){res.hidden=true;closeRail()}});
+
+/* ---------- start ---------- */
+applyFs();applyTheme();applyRecite();
+{const i=idxOf(location.hash.slice(1));render(i<0?0:i)}
+
+</script>
+</body>
+</html>
